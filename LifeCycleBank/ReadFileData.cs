@@ -26,14 +26,22 @@ namespace LifeCycleBank
                 }
                 if (Array.IndexOf(lines, i) < number)
                 {
-                    var s = lines[i].Split(";");
+                    var s = lines[i].Split(";", StringSplitOptions.RemoveEmptyEntries);
                     for (int j = 0; j < s.Length; j++)
                     {
-                        Console.WriteLine(s[j]);
+                        if(s.Length > 3)
+                        {
+                            //new Customer
+                            Console.WriteLine(s[j]);
+
+                        }
+                        else if(s.Length == 3)
+                        {
+                            //new Account
+                           
+                        }
+                  
                     }
-
-
-
                 }
             }
 
