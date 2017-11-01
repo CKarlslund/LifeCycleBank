@@ -10,31 +10,36 @@ namespace LifeCycleBank
     class ReadFileData
     {
         private List<Account> accounts;
+        private List<Customer> customers;
         public static void ReadFileFromBankData()
         {
             var number = 0;
             var path = Path.Combine(Directory.GetCurrentDirectory(), "bankdata\\bankdata-small.txt");
             string[] lines = System.IO.File.ReadAllLines(path);
-            foreach (var line in lines)
+
+            for (int i = 0; i < lines.Length; i++)
             {
-               if(Regex.IsMatch(line, "^[0-9]*$"))
-                    {
-                    number = Convert.ToInt32(line);
+                if (Regex.IsMatch(lines[i], "^[0-9]*$"))
+                {
+                    number = Convert.ToInt32(lines[i]);
                   
                 }
-                for (int i = 0; i < number; i++)
+                if (Array.IndexOf(lines, i) < number)
                 {
-                    var s = line.Split(";");
-                    for (int x = 0; x < s.Length; x++)
+                    var s = lines[i].Split(";");
+                    for (int j = 0; j < s.Length; j++)
                     {
-                        Console.WriteLine(s[x]);
+                        Console.WriteLine(s[j]);
                     }
 
 
-                }
 
+                }
             }
-          
+
+
+
+
             Console.ReadLine();
         }
 
