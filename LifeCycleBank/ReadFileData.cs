@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -9,9 +10,9 @@ namespace LifeCycleBank
 {
     class ReadFileData
     {
-        private List<Account> accounts;
-        private List<Customer> customers;
-        public static void ReadFileFromBankData()
+        private List<Account> accounts = new List<Account>();
+        private List<Customer> customers = new List<Customer>();
+        public  void ReadFileFromBankData()
         {
             var number = 0;
             var path = Path.Combine(Directory.GetCurrentDirectory(), "bankdata\\bankdata-small.txt");
@@ -22,35 +23,50 @@ namespace LifeCycleBank
                 if (Regex.IsMatch(lines[i], "^[0-9]*$"))
                 {
                     number = Convert.ToInt32(lines[i]);
-                  
                 }
                 if (Array.IndexOf(lines, i) < number)
                 {
-                    var s = lines[i].Split(";", StringSplitOptions.RemoveEmptyEntries);
-                    for (int j = 0; j < s.Length; j++)
-                    {
-                        if(s.Length > 3)
+                    var splitLine = lines[i].Split(";");
+                  
+                        if(splitLine.Length > 3 && !(splitLine.Length < 3))
                         {
                             //new Customer
-                            Console.WriteLine(s[j]);
+                            var customer = new Customer();
+                            customer.Id = Convert.ToInt32(splitLine[0]);
+                            customer.OrganizationNumber = splitLine[1];
+                            customer.CompanyName = splitLine[2];
+                            customer.Address = splitLine[3];
+                            customer.City = splitLine[4];
+                            customer.Region = splitLine[5];
+                            customer.PostalCode = splitLine[6];
+                            customer.Country = splitLine[7];
+                            customer.PhoneNumber = splitLine[8];
 
+                            customers.Add(customer);
                         }
-                        else if(s.Length == 3)
+                        else if(splitLine.Length == 3)
                         {
-                            //new Account
-                           
-                        }
-                  
+                        //new Account
+                        var account = new Account();
+                        account.Id = Convert.ToInt32(splitLine[0]);
+                        account.Owner = customers.FirstOrDefault(x=>x.Id == Convert.ToInt32(splitLine[1]));
+                        account.Balance = Convert.ToDecimal(splitLine[2].Replace(".", ","));
+
+                        accounts.Add(account);
                     }
-                }
+                  
+                 }
             }
-
-
-
-
-            Console.ReadLine();
         }
 
-     
+        public List<Customer> GetAllCustomers()
+        {
+            return customers;
+        }
+
+        public List<Account> GetAllAccounts()
+        {
+            return accounts;
+        }
     }
 }

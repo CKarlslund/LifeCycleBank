@@ -7,7 +7,10 @@ namespace LifeCycleBank
         static void Main(string[] args)
         {
             Console.WriteLine("LifeCycleBank!");
-            ReadFileData.ReadFileFromBankData();
+            var r = new ReadFileData();
+            r.ReadFileFromBankData();
+           
+            Console.ReadLine();
         }
     }
 }
