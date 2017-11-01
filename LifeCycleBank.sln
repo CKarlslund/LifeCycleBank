@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeCycleBank", "LifeCycleBank\LifeCycleBank.csproj", "{A6243626-69E1-4CD5-9594-A3E72E71A915}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeCycleBank.Tests", "LifeCycleBank.Tests\LifeCycleBank.Tests.csproj", "{B7B46978-D4B8-40A9-9D8A-3A3CB86010CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A6243626-69E1-4CD5-9594-A3E72E71A915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6243626-69E1-4CD5-9594-A3E72E71A915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6243626-69E1-4CD5-9594-A3E72E71A915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B46978-D4B8-40A9-9D8A-3A3CB86010CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B46978-D4B8-40A9-9D8A-3A3CB86010CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B46978-D4B8-40A9-9D8A-3A3CB86010CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B46978-D4B8-40A9-9D8A-3A3CB86010CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
