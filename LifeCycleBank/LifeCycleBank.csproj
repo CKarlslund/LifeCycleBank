@@ -10,4 +10,8 @@
     <ProjectReference Include="..\LifeCycleBank.Models\LifeCycleBank.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LifeCycleBank.Models\LifeCycleBank.Models.csproj" />
+  </ItemGroup>
+
 </Project>
