@@ -9,12 +9,10 @@ namespace LifeCycleBank
         {
             Console.WriteLine("LifeCycleBank!");
 
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
-        }
-
-        static void OnProcessExit(object sender, EventArgs e)
-        {
-            CreateFileData.CreateFile();
+            if (Console.ReadKey().Key == ConsoleKey.D0)
+            {
+                CreateFileData.CreateFile();
+            }
         }
     }
 }
