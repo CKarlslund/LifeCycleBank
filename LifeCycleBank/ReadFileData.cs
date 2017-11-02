@@ -10,9 +10,9 @@ namespace LifeCycleBank
 {
     class ReadFileData
     {
-        private List<Account> accounts = new List<Account>();
-        private List<Customer> customers = new List<Customer>();
-        public  void ReadFileFromBankData()
+        private static List<Account> accounts = new List<Account>();
+        private static List<Customer> customers = new List<Customer>();
+        public  static void ReadFileFromBankData()
         {
             var number = 0;
             var path = Path.Combine(Directory.GetCurrentDirectory(), "bankdata\\bankdata-small.txt");
@@ -59,12 +59,12 @@ namespace LifeCycleBank
             }
         }
 
-        public List<Customer> GetAllCustomers()
+        public static List<Customer> GetAllCustomers()
         {
             return customers;
         }
 
-        public List<Account> GetAllAccounts()
+        public static List<Account> GetAllAccounts()
         {
             return accounts;
         }
