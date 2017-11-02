@@ -8,7 +8,7 @@ namespace LifeCycleBank.services
 {
     public class CreateFileData
     {
-        public static void CreateFile()
+        public static string CreateFile()
         {
             string fileName = DateTime.Now.ToString("yyyyMMdd-HHmm") + ".txt";
             var path = @"bankdata\";
@@ -30,6 +30,8 @@ namespace LifeCycleBank.services
                     sw.WriteLine($"{0};{1};{2}", a.Id.ToString(), a.Owner.Id.ToString(), a.Balance.ToString());
                 }
             }
+
+            return fileName;
         }
     }
 }
