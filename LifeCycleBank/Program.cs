@@ -16,3 +16,11 @@ namespace LifeCycleBank
         }
     }
 }
+
+            if (Console.ReadKey().Key == ConsoleKey.D0)
+            {
+                CreateFileData.CreateFile();
+            }
+        }
+    }
+}
