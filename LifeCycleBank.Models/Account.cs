@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LifeCycleBank.Models
 {
-    class Account
+    public class Account
     {
         public int Id { get; set; }
         public Customer Owner { get; set; }
