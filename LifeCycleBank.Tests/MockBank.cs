@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Transactions;
+﻿using System.Collections.Generic;
 using LifeCycleBank.Interfaces;
 using System.Linq;
 using LifeCycleBank.Models;
@@ -46,14 +43,35 @@ namespace LifeCycleBank.Tests
             account.Balance += amount;
         }
 
-        public void CreateWithdrawal(IAccount fromAaccount, decimal amount)
+        public void CreateWithdrawal(IAccount fromAccount, decimal amount)
         {
-            throw new NotImplementedException();
+            var account = Accounts.FirstOrDefault(a => a.Id == fromAccount.Id);
+
+            if (amount <= account.Balance)
+            {
+                account.Balance = account.Balance - amount;
+            }
+            else
+            {
+                throw new AccountBalanceException("The targeted account does not have enough money!");
+            }
         }
 
         public void CreateTransaction(IAccount fromAccount, IAccount toAccount, decimal amount)
         {
-            throw new NotImplementedException();
+            var creditAccount = Accounts.FirstOrDefault(a => a.Id == fromAccount.Id);
+            var debitAccount = Accounts.FirstOrDefault(a => a.Id == toAccount.Id);
+
+
+            if (amount <= creditAccount.Balance)
+            {
+                creditAccount.Balance = creditAccount.Balance - amount;
+                debitAccount.Balance += amount;
+            }
+            else
+            {
+                throw new AccountBalanceException("The specified amount was bigger than the available sum on the credit account. Could not continue.");
+            }
         }
     }
 }
