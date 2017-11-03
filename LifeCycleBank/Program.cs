@@ -1,4 +1,5 @@
 ﻿using LifeCycleBank.Models;
+using LifeCycleBank.services;
 using System;
 using System.Linq;
 
@@ -12,13 +13,13 @@ namespace LifeCycleBank
             ReadFileData.ReadFileFromBankData();
             var bank = new Bank();
            
-            Console.ReadLine();
-
             if (Console.ReadKey().Key == ConsoleKey.D0)
             {
                 CreateFileAndDisplayStatistics(bank);
-                
+
             }
+
+            Console.ReadLine();
         }
 
         private static void CreateFileAndDisplayStatistics(Bank bank)
