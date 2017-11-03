@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="bankdata\" />
+    <ProjectReference Include="..\LifeCycleBank.Interfaces\LifeCycleBank.Interfaces.csproj" />
+    <ProjectReference Include="..\LifeCycleBank.Models\LifeCycleBank.Models.csproj" />
   </ItemGroup>
 
 </Project>
