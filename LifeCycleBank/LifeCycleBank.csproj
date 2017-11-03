@@ -12,8 +12,5 @@
     <Folder Include="services\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\LifeCycleBank.Models\LifeCycleBank.Models.csproj" />
-  </ItemGroup>
 
 </Project>
