@@ -4,22 +4,26 @@ using System.Text;
 
 namespace LifeCycleBank
 {
-    class ReadStatisticFromBankData
+    public class ReadStatisticFromBankData
     {
-        public void ReadStatistic()
+        public static Dictionary<string, string> GetStatistics()
         {
-
+            var statistics = new Dictionary<string, string>();
+            ReadFileData.ReadFileFromBankData();
             var accounts = ReadFileData.GetAllAccounts();
-            var numberOfCustomers = ReadFileData.GetAllCustomers().Count;
-            var numberOfAccounts = accounts.Count;
+            var customers = ReadFileData.GetAllCustomers();
             var balance = 0M;
 
             foreach (var account in accounts)
             {
                 balance += account.Balance;
             }
-            
 
+            statistics.Add("numberOfAccounts", accounts.Count.ToString());
+            statistics.Add("numberOfCustomers", customers.Count.ToString());
+            statistics.Add("totalBalance", balance.ToString());
+
+            return statistics;
         }
     }
 }
