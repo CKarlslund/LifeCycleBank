@@ -1,8 +1,9 @@
 ﻿using System;
+using LifeCycleBank.Interfaces;
 
 namespace LifeCycleBank.Models
 {
-    public class Customer
+    public class Customer : ICustomer
     {
         public int Id { get; set; }
         public string OrganizationNumber { get; set; }

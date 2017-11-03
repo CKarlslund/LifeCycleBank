@@ -12,4 +12,10 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LifeCycleBank.Interfaces\LifeCycleBank.Interfaces.csproj" />
+    <ProjectReference Include="..\LifeCycleBank.Models\LifeCycleBank.Models.csproj" />
+    <ProjectReference Include="..\LifeCycleBank\LifeCycleBank.csproj" />
+  </ItemGroup>
+
 </Project>
