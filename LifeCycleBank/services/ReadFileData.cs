@@ -10,13 +10,21 @@ namespace LifeCycleBank
 {
     class ReadFileData
     {
-        private List<Account> accounts = new List<Account>();
-        private List<Customer> customers = new List<Customer>();
-        public  void ReadFileFromBankData()
+        private static List<Account> accounts = new List<Account>();
+        private static List<Customer> customers = new List<Customer>();
+        public  static void ReadFileFromBankData()
         {
             var number = 0;
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "bankdata\\bankdata-small.txt");
-            string[] lines = System.IO.File.ReadAllLines(path);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "bankdata");
+            var directory = new DirectoryInfo(path);
+
+            var myFile = directory.GetFiles()
+             .OrderByDescending(f => f.LastWriteTime)
+             .First();
+
+           
+
+            string[] lines = System.IO.File.ReadAllLines(myFile.FullName);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -59,12 +67,12 @@ namespace LifeCycleBank
             }
         }
 
-        public List<Customer> GetAllCustomers()
+        public static List<Customer> GetAllCustomers()
         {
             return customers;
         }
 
-        public List<Account> GetAllAccounts()
+        public static List<Account> GetAllAccounts()
         {
             return accounts;
         }
