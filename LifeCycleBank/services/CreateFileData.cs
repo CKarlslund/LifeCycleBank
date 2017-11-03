@@ -1,4 +1,5 @@
-﻿using LifeCycleBank.Models;
+﻿using LifeCycleBank.Interfaces;
+using LifeCycleBank.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,13 +9,11 @@ namespace LifeCycleBank.services
 {
     public class CreateFileData
     {
-        public static string CreateFile()
+        public static string CreateFile(Bank bank)
         {
             string fileName = DateTime.Now.ToString("yyyyMMdd-HHmm") + ".txt";
             var path = @"bankdata\";
             string pathString = Path.Combine(path, fileName);
-
-            var bank = new Bank();
 
             using (StreamWriter sw = new StreamWriter(pathString, true))
             {
