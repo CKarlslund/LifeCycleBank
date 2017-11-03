@@ -9,7 +9,7 @@ namespace LifeCycleBank.services
 {
     public class CreateFileData
     {
-        public static string CreateFile(Bank bank)
+        public static string CreateFile(IBank bank)
         {
             string fileName = DateTime.Now.ToString("yyyyMMdd-HHmm") + ".txt";
             var path = @"bankdata\";
