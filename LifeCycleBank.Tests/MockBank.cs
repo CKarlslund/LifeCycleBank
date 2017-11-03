@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Transactions;
 using LifeCycleBank.Interfaces;
+using System.Linq;
 using LifeCycleBank.Models;
 
 namespace LifeCycleBank.Tests
 {
     class MockBank : IBank
     {
+        public MockBank()
+        {
+            GetBankData();
+        }
+
         public int Id { get; set; }
         public List<IAccount> Accounts { get; set; }
         public List<ICustomer> Customers { get; set; }
@@ -31,6 +37,23 @@ namespace LifeCycleBank.Tests
 
             Accounts = accounts;
             Customers = customers;
+        }
+
+        public void CreateDeposit(IAccount toAccount, decimal amount)
+        {
+            var account = Accounts.FirstOrDefault(a => a.Id == toAccount.Id);
+
+            account.Balance += amount;
+        }
+
+        public void CreateWithdrawal(IAccount fromAaccount, decimal amount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateTransaction(IAccount fromAccount, IAccount toAccount, decimal amount)
+        {
+            throw new NotImplementedException();
         }
     }
 }
