@@ -1,4 +1,5 @@
 ﻿using LifeCycleBank.Models;
+using LifeCycleBank.services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,16 +16,8 @@ namespace LifeCycleBank
         public  static void ReadFileFromBankData()
         {
             var number = 0;
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "bankdata");
-            var directory = new DirectoryInfo(path);
 
-            var myFile = directory.GetFiles()
-             .OrderByDescending(f => f.LastWriteTime)
-             .First();
-
-           
-
-            string[] lines = System.IO.File.ReadAllLines(myFile.FullName);
+            string[] lines = System.IO.File.ReadAllLines(GetLatestFile.GetPathToLatestFile());
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -76,5 +69,6 @@ namespace LifeCycleBank
         {
             return accounts;
         }
+       
     }
 }
