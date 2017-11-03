@@ -15,7 +15,7 @@ namespace LifeCycleBank.services
             var path = Path.Combine(Directory.GetCurrentDirectory(), "bankdata");
             var directory = new DirectoryInfo(path);
             var latestFile = directory.GetFiles()
-                               .OrderByDescending(f => GetDateFromFileName(f.FullName))
+                               .OrderByDescending(f => GetDateFromFileName(f.Name))
                                .First();
 
             return latestFile.FullName;
@@ -24,16 +24,17 @@ namespace LifeCycleBank.services
         private static DateTime GetDateFromFileName(string fileName)
         {
             DateTime date;
-            if (DateTime.TryParseExact(GetFileNameDate(fileName),
-                  "yyyyMMdd-HHmm", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+           DateTime.TryParseExact(GetFileNameDate(fileName),
+                  "yyyyMMdd-HHmm", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+               
                 return date;
-            // default value if date cannot be parsed (you can use nullable DateTime also)
-            return DateTime.MinValue;
+            
         }
 
         private static string GetFileNameDate(string fileName)
         {
-            return fileName.Substring(0, fileName.IndexOf(".txt"));
+            var name = fileName.Substring(0, fileName.IndexOf(".txt"));
+            return name;
         }
     }
 }
