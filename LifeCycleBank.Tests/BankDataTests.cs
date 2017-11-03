@@ -3,12 +3,12 @@ using Xunit;
 
 namespace LifeCycleBank.Tests
 {
-    public class UnitTest1
+    public class BankDataTests
     {
         [Fact]
-        public void Test1()
+        public void Read_File_Data()
         {
-
+            ReadFileData.
         }
     }
 }
