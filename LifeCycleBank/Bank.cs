@@ -32,5 +32,20 @@ namespace LifeCycleBank.Models
             Accounts = ReadFileData.GetAllAccounts();
             Customers = ReadFileData.GetAllCustomers();
         }
+
+        public void CreateDeposit(IAccount toAccount, decimal amount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateWithdrawal(IAccount fromAaccount, decimal amount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateTransaction(IAccount fromAccount, IAccount toAccount, decimal amount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
