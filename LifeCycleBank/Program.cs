@@ -32,17 +32,22 @@ namespace LifeCycleBank
             Console.WriteLine("Antal konton: " + statistics["numberOfAccounts"]);
             Console.WriteLine("Totalt saldo: " + statistics["totalBalance"]);
             Console.ReadLine();
+
+            if (Console.ReadKey().Key == ConsoleKey.D0)
+            {
+                CreateFileAndDisplayStatistics(bank);
+                
+            }
         }
 
-        private static void CreateFileAndDisplayStatistics()
+        private static void CreateFileAndDisplayStatistics(Bank bank)
         {
-            var fileName = CreateFileData.CreateFile();
+            var fileName = CreateFileData.CreateFile(bank);
             var statistics = ReadStatisticFromBankData.GetStatistics();
 
             Console.WriteLine("Sparar till " + "fileName" + "...");
             Console.WriteLine("Antal kunder: " + statistics["numberOfCustomers"]);
             Console.WriteLine("Antal konton: " + statistics["numberOfAccounts"]);
-            Console.WriteLine("Totalt saldo: " + statistics["totalBalance"]);
             Console.WriteLine("Totalt saldo: " + statistics["totalBalance"]);
             Console.ReadLine();
         }
