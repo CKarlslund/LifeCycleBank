@@ -1,4 +1,5 @@
-﻿using LifeCycleBank.Models;
+﻿using LifeCycleBank.Interfaces;
+using LifeCycleBank.Models;
 using LifeCycleBank.services;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,9 @@ namespace LifeCycleBank
 {
     class ReadFileData
     {
-        private static List<Account> accounts = new List<Account>();
-        private static List<Customer> customers = new List<Customer>();
+        private static List<IAccount> accounts = new List<IAccount>();
+        private static List<ICustomer> customers = new List<ICustomer>();
+
         public  static void ReadFileFromBankData()
         {
             var number = 0;
@@ -31,27 +33,31 @@ namespace LifeCycleBank
                   
                         if(splitLine.Length > 3 && !(splitLine.Length < 3))
                         {
-                            //new Customer
-                            var customer = new Customer();
-                            customer.Id = Convert.ToInt32(splitLine[0]);
-                            customer.OrganizationNumber = splitLine[1];
-                            customer.CompanyName = splitLine[2];
-                            customer.Address = splitLine[3];
-                            customer.City = splitLine[4];
-                            customer.Region = splitLine[5];
-                            customer.PostalCode = splitLine[6];
-                            customer.Country = splitLine[7];
-                            customer.PhoneNumber = splitLine[8];
+                        //new Customer
+                        var customer = new Customer
+                        {
+                            Id = Convert.ToInt32(splitLine[0]),
+                            OrganizationNumber = splitLine[1],
+                            CompanyName = splitLine[2],
+                            Address = splitLine[3],
+                            City = splitLine[4],
+                            Region = splitLine[5],
+                            PostalCode = splitLine[6],
+                            Country = splitLine[7],
+                            PhoneNumber = splitLine[8]
+                        };
 
-                            customers.Add(customer);
+                        customers.Add(customer);
                         }
                         else if(splitLine.Length == 3)
                         {
                         //new Account
-                        var account = new Account();
-                        account.Id = Convert.ToInt32(splitLine[0]);
-                        account.Owner = customers.FirstOrDefault(x=>x.Id == Convert.ToInt32(splitLine[1]));
-                        account.Balance = Convert.ToDecimal(splitLine[2].Replace(".", ","));
+                        var account = new Account
+                        {
+                            Id = Convert.ToInt32(splitLine[0]),
+                            Owner = customers.FirstOrDefault(x => x.Id == Convert.ToInt32(splitLine[1])),
+                            Balance = Convert.ToDecimal(splitLine[2].Replace(".", ","))
+                        };
 
                         accounts.Add(account);
                     }
@@ -60,12 +66,13 @@ namespace LifeCycleBank
             }
         }
 
-        public static List<Customer> GetAllCustomers()
+     
+        public static List<ICustomer> GetAllCustomers()
         {
             return customers;
         }
 
-        public static List<Account> GetAllAccounts()
+        public static List<IAccount> GetAllAccounts()
         {
             return accounts;
         }

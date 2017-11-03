@@ -19,13 +19,18 @@ namespace LifeCycleBank.Models
             }
         }
 
+        protected internal Bank()
+        {
+            GetBankData();
+        }
         public int Id { get; set; }
         public List<IAccount> Accounts { get; set; }
         public List<ICustomer> Customers { get; set; }
 
         public void GetBankData()
         {
-            //Read all the bank data
+            Accounts = ReadFileData.GetAllAccounts();
+            Customers = ReadFileData.GetAllCustomers();
         }
     }
 }

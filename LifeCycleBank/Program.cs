@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LifeCycleBank.Models;
+using System;
 
 namespace LifeCycleBank
 {
@@ -8,12 +9,7 @@ namespace LifeCycleBank
         {
             Console.WriteLine("LifeCycleBank!");
             ReadFileData.ReadFileFromBankData();
-            var customers = ReadFileData.GetAllCustomers();
-
-            foreach (var item in customers)
-            {
-                Console.WriteLine(item.CompanyName);
-            }
+            var bank = new Bank();
            
             Console.ReadLine();
         }

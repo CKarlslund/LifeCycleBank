@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LifeCycleBank.Interfaces\LifeCycleBank.Interfaces.csproj" />
     <ProjectReference Include="..\LifeCycleBank.Models\LifeCycleBank.Models.csproj" />
   </ItemGroup>
 
