@@ -27,7 +27,7 @@ namespace LifeCycleBank
             var fileName = CreateFileData.CreateFile(bank);
             var statistics = ReadStatisticFromBankData.GetStatistics();
 
-            Console.WriteLine("Sparar till " + "fileName" + "...");
+            Console.WriteLine("Sparar till " + fileName + "...");
             Console.WriteLine("Antal kunder: " + statistics["numberOfCustomers"]);
             Console.WriteLine("Antal konton: " + statistics["numberOfAccounts"]);
             Console.WriteLine("Totalt saldo: " + statistics["totalBalance"]);
