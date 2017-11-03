@@ -11,5 +11,8 @@ namespace LifeCycleBank.Interfaces
         List<ICustomer> Customers { get; set; }
 
         void GetBankData();
+        void CreateDeposit(IAccount toAccount, decimal amount);
+        void CreateWithdrawal(IAccount fromAaccount, decimal amount);
+        void CreateTransaction(IAccount fromAccount, IAccount toAccount, decimal amount);
     }
 }
