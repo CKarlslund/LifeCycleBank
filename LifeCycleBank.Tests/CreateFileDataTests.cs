@@ -1,9 +1,11 @@
 ﻿using LifeCycleBank.Interfaces;
 using LifeCycleBank.services;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using System.IO;
 
 namespace LifeCycleBank.Tests
 {
@@ -17,9 +19,17 @@ namespace LifeCycleBank.Tests
         }
 
         [Fact]
-        public void CanCreateFile()
+        public void WritesCorrectNumberOfLines()
         {
-            CreateFileData.CreateFile(_bank);
+            var bank = new MockBank();
+            var output = new List<string>();
+            var writer = new MockWriter(output);
+            var createFileData = new CreateFileData(bank, writer);
+            createFileData.CreateFile();
+
+            Assert.Equal(output.Count, 9);
         }
     }
 }
+
+      
