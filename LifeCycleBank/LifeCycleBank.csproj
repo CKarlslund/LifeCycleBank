@@ -6,9 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LifeCycleBank.Interfaces\LifeCycleBank.Interfaces.csproj" />
     <ProjectReference Include="..\LifeCycleBank.Models\LifeCycleBank.Models.csproj" />
-    <Folder Include="bankdata\" />
+    <Folder Include="bankdata\">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Folder>
     <Folder Include="services\" />
   </ItemGroup>
 

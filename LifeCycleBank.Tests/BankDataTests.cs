@@ -14,13 +14,5 @@ namespace LifeCycleBank.Tests
             var date = new DateTime(2017,10,19,12,43,0);
             Assert.Equal(date, fileDate);
         }
-
-        [Fact]
-
-        public void Get_Latest_File_Path_Test()
-        {
-            var path = GetLatestFile.GetPathToLatestFile();
-      
-        }
     }
 }

@@ -12,7 +12,7 @@ namespace LifeCycleBank.services
     {
         public static string GetPathToLatestFile()
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "bankdata");
+            var path = @"bankdata";
             var directory = new DirectoryInfo(path);
             var latestFile = directory.GetFiles()
                                .OrderByDescending(f => GetDateFromFileName(f.Name))
