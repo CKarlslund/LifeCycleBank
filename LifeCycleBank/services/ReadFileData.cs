@@ -15,11 +15,15 @@ namespace LifeCycleBank
         private static List<IAccount> accounts = new List<IAccount>();
         private static List<ICustomer> customers = new List<ICustomer>();
 
-        public  static void ReadFileFromBankData()
+        public static void ReadFileFromBankData()
         {
-            var number = 0;
 
             string[] lines = System.IO.File.ReadAllLines(GetLatestFile.GetPathToLatestFile());
+            ReadFile(lines);
+        }
+        public  static void ReadFile(string [] lines)
+        {
+            var number = 0;
 
             for (int i = 0; i < lines.Length; i++)
             {
