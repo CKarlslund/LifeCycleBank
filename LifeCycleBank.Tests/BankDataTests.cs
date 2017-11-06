@@ -8,11 +8,11 @@ namespace LifeCycleBank.Tests
     public class BankDataTests
     {
         [Fact]
-        public void Read_File_Data()
+        public void Get_Date_From_FileName_Test()
         {
-           
-            var path = GetLatestFile.GetPathToLatestFile();
-            Assert.Equal("", path);
+            var fileDate = GetLatestFile.GetDateFromFileName("20171019-1243.txt");
+            var date = new DateTime(2017,10,19,12,43,00);
+            Assert.Equal(date, fileDate);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace LifeCycleBank.services
             return latestFile.FullName;
         }
 
-        private static DateTime GetDateFromFileName(string fileName)
+        public static DateTime GetDateFromFileName(string fileName)
         {
             DateTime date;
            DateTime.TryParseExact(GetFileNameDate(fileName),
@@ -31,7 +31,7 @@ namespace LifeCycleBank.services
             
         }
 
-        private static string GetFileNameDate(string fileName)
+        public static string GetFileNameDate(string fileName)
         {
             var name = fileName.Substring(0, fileName.IndexOf(".txt"));
             return name;
