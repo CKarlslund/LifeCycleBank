@@ -12,5 +12,10 @@
     <Folder Include="services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="bankdata\20171009-1234.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

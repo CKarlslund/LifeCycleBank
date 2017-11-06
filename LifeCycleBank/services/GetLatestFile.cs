@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace LifeCycleBank.services
 {
-    class GetLatestFile
+    public class GetLatestFile
     {
         public static string GetPathToLatestFile()
         {

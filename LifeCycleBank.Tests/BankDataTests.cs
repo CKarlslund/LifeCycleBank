@@ -1,4 +1,6 @@
+using LifeCycleBank.services;
 using System;
+using System.IO;
 using Xunit;
 
 namespace LifeCycleBank.Tests
@@ -8,7 +10,9 @@ namespace LifeCycleBank.Tests
         [Fact]
         public void Read_File_Data()
         {
-            ReadFileData.
+           
+            var path = GetLatestFile.GetPathToLatestFile();
+            Assert.Equal("", path);
         }
     }
 }
