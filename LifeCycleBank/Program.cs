@@ -10,10 +10,6 @@ namespace LifeCycleBank
         static void Main(string[] args)
         {
             Console.Clear();
-            Console.WriteLine("*****************************");
-            Console.WriteLine("Välkommen till LifeCycleBank");
-            Console.WriteLine("*****************************");
-
             ReadFileData.ReadFileFromBankData();
             var bank = new Bank();
             bool closeProgram = false;
@@ -96,6 +92,9 @@ namespace LifeCycleBank
 
         private static int DisplayMenu()
         {
+            Console.WriteLine("*****************************");
+            Console.WriteLine("Välkommen till LifeCycleBank");
+            Console.WriteLine("*****************************");
             Console.WriteLine("0) Avsluta och Spara");
             Console.WriteLine("1) Sök Kund");
             Console.WriteLine("2) Visa Kundbild");
@@ -126,7 +125,7 @@ namespace LifeCycleBank
 
         private static void SearchCustomers(Bank bank, string searchWord)
         {
-            var customers = bank.Customers.Where(x => x.CompanyName == searchWord || x.City == searchWord).ToList();
+            var customers = CustomerService.SearchCustomer(bank, searchWord);
 
             if (customers.Count() != 0)
             {
@@ -149,11 +148,11 @@ namespace LifeCycleBank
         private static void GetCustomerInfo(Bank bank, int customerNumber)
         {
 
-            var customer = bank.Customers.SingleOrDefault(x => x.Id == customerNumber);
+            var customer = CustomerService.GetCustomer(bank, customerNumber);
 
             if (customer != null)
             {
-                var customerAccounts = bank.Accounts.Where(x => x.Owner.Id == customer.Id).ToList();
+                var customerAccounts = CustomerService.GetCustomerAccounts(bank, customer.Id);
                 decimal totalBalance = 0;
 
                 Console.WriteLine("\n-----------------------------");
