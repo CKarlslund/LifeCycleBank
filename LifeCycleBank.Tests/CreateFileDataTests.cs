@@ -24,8 +24,7 @@ namespace LifeCycleBank.Tests
             var bank = new MockBank();
             var output = new List<string>();
             var writer = new MockWriter(output);
-            var createFileData = new CreateFileData(bank);
-            createFileData.CreateFile(writer);
+            CreateFileData.CreateFile(bank, writer);
 
             Assert.Equal(output.Count, 9);
         }
@@ -36,8 +35,7 @@ namespace LifeCycleBank.Tests
             var bank = new MockBank();
             var output = new List<string>();
             var writer = new MockWriter(output);
-            var createFileData = new CreateFileData(bank);
-            createFileData.CreateFile(writer);
+            CreateFileData.CreateFile(bank, writer);
 
             Assert.Equal(output[0], "3");
             Assert.Equal(output[1], "1001;559268 - 7528;Berglunds snabbköp;Berguvsvägen  8;Luleå;;S - 958 22;Sweden;0921 - 12 34 65");

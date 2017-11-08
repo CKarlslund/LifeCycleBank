@@ -26,13 +26,11 @@ namespace LifeCycleBank
         {
             var statistics = ReadStatisticFromBankData.GetStatistics();
 
-            var createFileData = new CreateFileData(bank);
-
             var fileName = DateTime.Now.ToString("yyyyMMdd-HHmm") + ".txt";
-            var path = createFileData.GetPath(fileName);
+            var path = CreateFileData.GetPath(fileName);
 
             var writer = new Writer(path, true);
-            createFileData.CreateFile(writer); 
+            CreateFileData.CreateFile(bank, writer); 
 
             Console.WriteLine("Sparar till " + fileName + "...");
             Console.WriteLine("Antal kunder: " + bank.Customers.Count);
