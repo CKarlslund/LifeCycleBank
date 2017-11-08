@@ -82,7 +82,7 @@ namespace LifeCycleBank
                 }
 
                 Console.WriteLine();
-                Console.WriteLine("Tryck på valfri kanpp för att fortsätta.");
+                Console.WriteLine("Tryck på ENTER för att fortsätta.");
                 Console.ReadLine();
                 Console.Clear();
 
