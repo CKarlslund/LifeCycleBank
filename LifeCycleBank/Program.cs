@@ -33,11 +33,19 @@ namespace LifeCycleBank
 
                     case 1:
                         {
+                            Console.WriteLine();
+                            Console.WriteLine("Ange stad eller företagsnamn:");
+                            var searchWord = Console.ReadLine();
+                            SearchCustomers(bank, searchWord);
                             break;
                         }
 
                     case 2:
                         {
+                            Console.WriteLine();
+                            Console.WriteLine("Ange kundnummer på kunden du vill se:");
+                            var customerID = Convert.ToInt32(Console.ReadLine());
+                            GetCustomerInfo(bank, customerID);
                             break;
                         }
 
@@ -77,8 +85,10 @@ namespace LifeCycleBank
                         }
                 }
 
+                Console.WriteLine();
                 Console.WriteLine("Tryck på valfri kanpp för att fortsätta.");
                 Console.ReadLine();
+                Console.Clear();
 
             } while (closeProgram == false);
 
@@ -113,5 +123,71 @@ namespace LifeCycleBank
             Console.WriteLine("Totalt saldo: " + statistics["totalBalance"]);
             Console.ReadLine();
         }
+
+        private static void SearchCustomers(Bank bank, string searchWord)
+        {
+            var customers = bank.Customers.Where(x => x.CompanyName == searchWord || x.City == searchWord).ToList();
+
+            if (customers.Count() != 0)
+            {
+                foreach (var customer in customers)
+                {
+                    Console.WriteLine("\n------------------------\n");
+                    Console.WriteLine("Företag: " + customer.CompanyName);
+                    Console.WriteLine("Kundnummer: " + customer.Id);
+                }
+                Console.WriteLine("\n------------------------\n");
+
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Ingen kund matchade sökningen");
+            }
+        }
+
+        private static void GetCustomerInfo(Bank bank, int customerNumber)
+        {
+
+            var customer = bank.Customers.SingleOrDefault(x => x.Id == customerNumber);
+
+            if (customer != null)
+            {
+                var customerAccounts = bank.Accounts.Where(x => x.Owner.Id == customer.Id).ToList();
+                decimal totalBalance = 0;
+
+                Console.WriteLine("\n-----------------------------");
+                Console.WriteLine("Kundnummer: " + customer.Id);
+                Console.WriteLine("Organisationsnummer: " + customer.OrganizationNumber);
+                Console.WriteLine("Företagsnamn: " + customer.CompanyName);
+                Console.WriteLine("Adress: " + customer.Address);
+                Console.WriteLine("Stad: " + customer.City);
+                Console.WriteLine("Region: " + customer.Region);
+                Console.WriteLine("Postnummer: " + customer.PostalCode);
+                Console.WriteLine("Land: " + customer.Country);
+                Console.WriteLine();
+                Console.WriteLine("Konton:");
+
+                foreach (var account in customerAccounts)
+                {
+                    Console.WriteLine("Kontonummer: " + account.Id);
+                    Console.WriteLine("Saldo: " + account.Balance + "kr");
+                    totalBalance = totalBalance + account.Balance;
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine("Kundens totala saldo: " + totalBalance + "kr");
+                Console.WriteLine("-----------------------------\n");
+
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Ingen kund matchade sökningen");
+            }
+
+
+        }
+
     }
 }
