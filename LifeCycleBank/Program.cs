@@ -9,17 +9,97 @@ namespace LifeCycleBank
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("LifeCycleBank!");
+            Console.Clear();
+            Console.WriteLine("*****************************");
+            Console.WriteLine("Välkommen till LifeCycleBank");
+            Console.WriteLine("*****************************");
+
             ReadFileData.ReadFileFromBankData();
             var bank = new Bank();
-           
-            if (Console.ReadKey().Key == ConsoleKey.D0)
+            bool closeProgram = false;
+
+            do
             {
-                CreateFileAndDisplayStatistics(bank);
+                int choice = DisplayMenu();
 
-            }
+                switch (choice)
+                {
+                    case 0:
+                        {
+                            CreateFileAndDisplayStatistics(bank);
+                            closeProgram = true;
+                            break;
+                        }
 
-            Console.ReadLine();
+                    case 1:
+                        {
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            break;
+                        }
+
+                    case 3:
+                        {
+                            break;
+                        }
+
+                    case 4:
+                        {
+                            break;
+                        }
+
+                    case 5:
+                        {
+                            break;
+                        }
+
+                    case 6:
+                        {
+                            break;
+                        }
+
+                    case 7:
+                        {
+                            break;
+                        }
+
+                    case 8:
+                        {
+                            break;
+                        }
+
+                    case 9:
+                        {
+                            break;
+                        }
+                }
+
+                Console.WriteLine("Tryck på valfri kanpp för att fortsätta.");
+                Console.ReadLine();
+
+            } while (closeProgram == false);
+
+        }
+
+        private static int DisplayMenu()
+        {
+            Console.WriteLine("0) Avsluta och Spara");
+            Console.WriteLine("1) Sök Kund");
+            Console.WriteLine("2) Visa Kundbild");
+            Console.WriteLine("3) Skapa kund");
+            Console.WriteLine("4) Ta bort kund");
+            Console.WriteLine("5) Skapa konto");
+            Console.WriteLine("6) Ta bort konto");
+            Console.WriteLine("7) Insättning");
+            Console.WriteLine("8) Uttag");
+            Console.WriteLine("9) Överföring");
+            Console.Write("Skriv in nummret på dit val: ");
+            var userChoice = Convert.ToInt32(Console.ReadLine());
+
+            return userChoice;
         }
 
         private static void CreateFileAndDisplayStatistics(Bank bank)
