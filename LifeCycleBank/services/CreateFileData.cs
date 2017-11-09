@@ -9,28 +9,32 @@ namespace LifeCycleBank.services
 {
     public class CreateFileData
     {
-        public static string CreateFile(IBank bank)
+        public static string GetPath(string fileName)
         {
-            string fileName = DateTime.Now.ToString("yyyyMMdd-HHmm") + ".txt";
             var path = @"bankdata\";
-            string pathString = Path.Combine(path, fileName);
 
-            using (StreamWriter sw = new StreamWriter(pathString, true))
-            {
-                sw.WriteLine(bank.Customers.Count);
+            return Path.Combine(path, fileName);
+        }
+
+        public static void CreateFile(IBank bank, IWriter writer)
+        {  
+                writer.WriteLine(bank.Customers.Count.ToString());
                 foreach (var c in bank.Customers)
                 {
-                    sw.WriteLine("{0};{1};{2};{3};{4};{5};{6};{7};{8}", c.Id.ToString(), c.OrganizationNumber, c.CompanyName,
-                        c.Address, c.City, c.Region, c.PostalCode, c.Country, c.PhoneNumber);
+                    var customerInfo = string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}", c.Id.ToString(), c.OrganizationNumber, c.CompanyName,
+                        c.Address, c.City, c.Region, c.PostalCode, c.Country, c.PhoneNumber).ToString();
+                    writer.WriteLine(customerInfo);
                 }
-                sw.WriteLine(bank.Accounts.Count);
+                writer.WriteLine(bank.Accounts.Count.ToString());
                 foreach (var a in bank.Accounts)
                 {
-                    sw.WriteLine("{0};{1};{2}", a.Id.ToString(), a.Owner.Id.ToString(), a.Balance.ToString());
+                    var accountInfo = string.Format("{0};{1};{2}", a.Id.ToString(), a.Owner.Id.ToString(), a.Balance.ToString()).ToString();
+                    writer.WriteLine(accountInfo);
                 }
-            }
-
-            return fileName;
+        
+            writer.Dispose();
         }
+
     }
+
 }

@@ -18,7 +18,17 @@ namespace LifeCycleBank.Tests
 
         public void GetBankData()
         {
-            var customer1 = new Customer() {Id = 1001,};
+            var customer1 = new Customer() {
+                Id = 1001,
+                OrganizationNumber = "559268 - 7528",
+                CompanyName = "Berglunds snabbköp",
+                Address = "Berguvsvägen  8",
+                City = "Luleå",
+                Region = null,
+                PostalCode = "S - 958 22",
+                Country = "Sweden",
+                PhoneNumber = "0921 - 12 34 65"
+                };
             var customer2 = new Customer() { Id = 1002, };
             var customer3 = new Customer() { Id = 1002, };
 

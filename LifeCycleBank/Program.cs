@@ -1,6 +1,7 @@
 ﻿using LifeCycleBank.Models;
 using LifeCycleBank.services;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace LifeCycleBank
@@ -113,14 +114,18 @@ namespace LifeCycleBank
 
         private static void CreateFileAndDisplayStatistics(Bank bank)
         {
-            var fileName = CreateFileData.CreateFile(bank);
             var statistics = ReadStatisticFromBankData.GetStatistics();
 
-            Console.WriteLine("Sparar till " + "fileName" + "...");
-            Console.WriteLine("Antal kunder: " + statistics["numberOfCustomers"]);
-            Console.WriteLine("Antal konton: " + statistics["numberOfAccounts"]);
+            var fileName = DateTime.Now.ToString("yyyyMMdd-HHmm") + ".txt";
+            var path = CreateFileData.GetPath(fileName);
+
+            var writer = new Writer(path, true);
+            CreateFileData.CreateFile(bank, writer); 
+
+            Console.WriteLine("Sparar till " + fileName + "...");
+            Console.WriteLine("Antal kunder: " + bank.Customers.Count);
+            Console.WriteLine("Antal konton: " + bank.Accounts.Count);
             Console.WriteLine("Totalt saldo: " + statistics["totalBalance"]);
-            Console.ReadLine();
         }
 
         private static void SearchCustomers(Bank bank, string searchWord)
