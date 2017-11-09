@@ -21,9 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="bankdata\20171009-1234.txt">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    <None Update="bankdata\20171010-1143.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
 
 </Project>
