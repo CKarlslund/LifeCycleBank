@@ -17,7 +17,7 @@ namespace LifeCycleBank
             do
             {
                 int choice = DisplayMenu();
-
+               
                 switch (choice)
                 {
                     case 0:
@@ -87,7 +87,7 @@ namespace LifeCycleBank
                 Console.Clear();
 
             } while (closeProgram == false);
-
+            
         }
 
         private static int DisplayMenu()
