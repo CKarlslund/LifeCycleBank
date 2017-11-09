@@ -10,6 +10,7 @@ namespace LifeCycleBank.Tests
         [Fact]
         public void Get_Date_From_FileName_Test()
         {
+            //test
             var fileDate = GetLatestFile.GetDateFromFileName("20171019-1243.txt");
             var date = new DateTime(2017,10,19,12,43,0);
             Assert.Equal(date, fileDate);
