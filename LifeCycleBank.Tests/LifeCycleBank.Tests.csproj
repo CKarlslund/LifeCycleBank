@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\Debug\netcoreapp2.0\bankdata\**" />
+    <EmbeddedResource Remove="bin\Debug\netcoreapp2.0\bankdata\**" />
+    <None Remove="bin\Debug\netcoreapp2.0\bankdata\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
     <PackageReference Include="Moq" Version="4.7.142" />
     <PackageReference Include="xunit" Version="2.2.0" />

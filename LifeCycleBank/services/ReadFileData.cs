@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace LifeCycleBank
 {
-    class ReadFileData
+    public class ReadFileData
     {
         private static List<IAccount> accounts = new List<IAccount>();
         private static List<ICustomer> customers = new List<ICustomer>();
