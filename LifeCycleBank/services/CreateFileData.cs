@@ -20,13 +20,13 @@ namespace LifeCycleBank.services
                 sw.WriteLine(bank.Customers.Count);
                 foreach (var c in bank.Customers)
                 {
-                    sw.WriteLine($"{0};{1};{2};{3};{4};{5};{6};{7};{8}", c.Id.ToString(), c.OrganizationNumber, c.CompanyName,
+                    sw.WriteLine("{0};{1};{2};{3};{4};{5};{6};{7};{8}", c.Id.ToString(), c.OrganizationNumber, c.CompanyName,
                         c.Address, c.City, c.Region, c.PostalCode, c.Country, c.PhoneNumber);
                 }
                 sw.WriteLine(bank.Accounts.Count);
                 foreach (var a in bank.Accounts)
                 {
-                    sw.WriteLine($"{0};{1};{2}", a.Id.ToString(), a.Owner.Id.ToString(), a.Balance.ToString());
+                    sw.WriteLine("{0};{1};{2}", a.Id.ToString(), a.Owner.Id.ToString(), a.Balance.ToString());
                 }
             }
 
