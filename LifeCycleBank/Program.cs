@@ -1,4 +1,5 @@
-﻿using LifeCycleBank.Models;
+﻿using LifeCycleBank.Interfaces;
+using LifeCycleBank.Models;
 using LifeCycleBank.services;
 using System;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace LifeCycleBank
                     case 1:
                         {
                             Console.WriteLine();
+                            Console.WriteLine("Sök kund");
                             Console.WriteLine("Ange stad eller företagsnamn:");
                             var searchWord = Console.ReadLine();
                             SearchCustomers(bank, searchWord);
@@ -39,6 +41,7 @@ namespace LifeCycleBank
                     case 2:
                         {
                             Console.WriteLine();
+                            Console.WriteLine("Visa kundbild");
                             Console.WriteLine("Ange kundnummer på kunden du vill se:");
                             var customerID = Convert.ToInt32(Console.ReadLine());
                             GetCustomerInfo(bank, customerID);
@@ -67,16 +70,32 @@ namespace LifeCycleBank
 
                     case 7:
                         {
+                            Console.WriteLine();
+                            Console.WriteLine("Insättning");
+                            var debitAccount = DebitAccount();
+                            var amuontToTransfer = Amuont();
+                            Deposit(bank, debitAccount, amuontToTransfer);
                             break;
                         }
 
                     case 8:
                         {
+                            Console.WriteLine();
+                            Console.WriteLine("Uttag");
+                            var creditAccount = CreditAccount();
+                            var amuontToTransfer = Amuont();
+                            Withdrawal(bank,creditAccount,amuontToTransfer);
                             break;
                         }
 
                     case 9:
                         {
+                            Console.WriteLine();
+                            Console.WriteLine("Överföring");
+                            var creditAccount = CreditAccount();
+                            var debitAccount = DebitAccount();
+                            var amuontToTransfer = Amuont();
+                            Transaction(bank, creditAccount, debitAccount, amuontToTransfer);
                             break;
                         }
                 }
@@ -186,6 +205,90 @@ namespace LifeCycleBank
             }
 
 
+        }
+
+        public static void Deposit(Bank bank,IAccount toAccount, decimal amount)
+        {
+            bank.CreateDeposit(toAccount, amount);
+            Console.WriteLine("Den angivna summan är nu insatt på kontot.");
+        }
+
+        public static void Withdrawal(Bank bank, IAccount fromAccount, decimal amount)
+        {
+            bool fail = false;
+
+            try
+            {
+                bank.CreateWithdrawal(fromAccount, amount);
+            }
+            catch 
+            {
+                fail = true;
+                Console.WriteLine("Medges ej.");
+            }
+
+            if (fail == false)
+            {
+                Console.WriteLine("Du har nu tagit ut " + amount + " från konto " + fromAccount.Id);
+            }
+        }
+
+        public static void Transaction(Bank bank, IAccount fromAccount, IAccount toAccount, decimal amuontToTransfer)
+        {
+            bool fail = false;
+
+            try
+            {
+                bank.CreateTransaction(fromAccount, toAccount, amuontToTransfer);
+            }
+            catch 
+            {
+                fail = true;
+                Console.WriteLine("Den angivna summan är större än vad som finns tillgängligt på kontot. Kunde inte fortsätta.");
+            }
+
+            if (fail == false)
+            {
+                Console.WriteLine(amuontToTransfer + " överfört från konto " + fromAccount.Id + " till " + toAccount.Id);
+            }
+
+
+        }
+
+        public static IAccount CreditAccount()
+        {
+            Console.WriteLine("Från konto:");
+            var formAccount = Convert.ToInt32(Console.ReadLine());
+            var creditAccount = GetAccount(formAccount);
+
+            return creditAccount;
+        }
+
+        public static IAccount DebitAccount()
+        {
+            Console.WriteLine("Till konto:");
+            var toAccount = Convert.ToInt32(Console.ReadLine());
+            var debitAccount = GetAccount(toAccount);
+
+            return debitAccount;
+        }
+
+        public static IAccount GetAccount(int account)
+        {
+            var accounts = ReadFileData.GetAllAccounts();
+
+            var creditAccount = accounts.FirstOrDefault(a => a.Id == account);
+
+            return creditAccount;
+
+        }
+
+        public static decimal Amuont()
+        {
+            Console.WriteLine("Belopp:");
+            var amuontToTransfer = Convert.ToDecimal(Console.ReadLine());
+
+            return amuontToTransfer;
         }
 
     }
