@@ -14,10 +14,30 @@ namespace LifeCycleBank
             ReadFileData.ReadFileFromBankData();
             var bank = new Bank();
             bool closeProgram = false;
+            int choice = 11;
 
             do
             {
-                int choice = DisplayMenu();
+                
+                try
+                {
+                    int userChoice = DisplayMenu();
+                    if (userChoice > 9)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Du måste ange ett tal mellan 0-9.");
+
+                    } else
+                    {
+                        choice = userChoice;
+                    }
+                }
+                catch 
+                {
+
+                    Console.WriteLine();
+                    Console.WriteLine("Du måste ange ett tal.");
+                }
 
                 switch (choice)
                 {
@@ -34,7 +54,22 @@ namespace LifeCycleBank
                             Console.WriteLine("Sök kund");
                             Console.WriteLine("Ange stad eller företagsnamn:");
                             var searchWord = Console.ReadLine();
-                            SearchCustomers(bank, searchWord);
+                            if (searchWord != "")
+                            {
+                                int intValue;
+                                if (int.TryParse(searchWord, out intValue))
+                                {
+                                    Console.WriteLine("Du måste ange ett ord.");
+                                }
+                                else
+                                {
+                                    SearchCustomers(bank, searchWord);
+                                }
+
+                            } else
+                            {
+                                Console.WriteLine("Du måste ange ett sökord.");
+                            }
                             break;
                         }
 
@@ -43,8 +78,22 @@ namespace LifeCycleBank
                             Console.WriteLine();
                             Console.WriteLine("Visa kundbild");
                             Console.WriteLine("Ange kundnummer på kunden du vill se:");
-                            var customerID = Convert.ToInt32(Console.ReadLine());
-                            GetCustomerInfo(bank, customerID);
+                            var customerID = Console.ReadLine();
+                            if (customerID != "")
+                            {
+                                int ID;
+                                if (int.TryParse(customerID, out ID))
+                                {
+                                    GetCustomerInfo(bank, ID);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Du måste ange ett nummer.");
+                                }
+                            } else
+                            {
+                                Console.WriteLine("Du måste ange ett nummer.");
+                            }
                             break;
                         }
 
@@ -72,8 +121,18 @@ namespace LifeCycleBank
                         {
                             Console.WriteLine();
                             Console.WriteLine("Insättning");
-                            var debitAccount = DebitAccount();
-                            var amuontToTransfer = Amuont();
+                            IAccount debitAccount;
+                            decimal amuontToTransfer;
+                            try
+                            {
+                                debitAccount = DebitAccount();
+                                amuontToTransfer = Amuont();
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Du måste ange nummer.");
+                                break;
+                            }
                             Deposit(bank, debitAccount, amuontToTransfer);
                             break;
                         }
@@ -82,8 +141,18 @@ namespace LifeCycleBank
                         {
                             Console.WriteLine();
                             Console.WriteLine("Uttag");
-                            var creditAccount = CreditAccount();
-                            var amuontToTransfer = Amuont();
+                            IAccount creditAccount;
+                            decimal amuontToTransfer;
+                            try
+                            {
+                                creditAccount = CreditAccount();
+                                amuontToTransfer = Amuont();
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Du måste ange nummer.");
+                                break;
+                            }
                             Withdrawal(bank,creditAccount,amuontToTransfer);
                             break;
                         }
@@ -92,9 +161,20 @@ namespace LifeCycleBank
                         {
                             Console.WriteLine();
                             Console.WriteLine("Överföring");
-                            var creditAccount = CreditAccount();
-                            var debitAccount = DebitAccount();
-                            var amuontToTransfer = Amuont();
+                            IAccount creditAccount;
+                            IAccount debitAccount;
+                            decimal amuontToTransfer;
+                            try
+                            {
+                                creditAccount = CreditAccount();
+                                debitAccount = DebitAccount();
+                                amuontToTransfer = Amuont();
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Du måste ange nummer.");
+                                break;
+                            }
                             Transaction(bank, creditAccount, debitAccount, amuontToTransfer);
                             break;
                         }
@@ -109,11 +189,25 @@ namespace LifeCycleBank
 
         }
 
+        private static void DisplayBankData()
+        {
+            var statistics = ReadStatisticFromBankData.GetStatistics();
+
+            Console.WriteLine("Sparar till " + "Läser in bankdata.txt..." + "...");
+            Console.WriteLine("Antal kunder: " + statistics["numberOfCustomers"]);
+            Console.WriteLine("Antal konton: " + statistics["numberOfAccounts"]);
+            Console.WriteLine("Totalt saldo: " + statistics["totalBalance"] + "kr");
+        
+        }
+
         private static int DisplayMenu()
         {
             Console.WriteLine("*****************************");
             Console.WriteLine("Välkommen till LifeCycleBank");
             Console.WriteLine("*****************************");
+            DisplayBankData();
+            Console.WriteLine();
+            Console.WriteLine("HUVUDMENY");
             Console.WriteLine("0) Avsluta och Spara");
             Console.WriteLine("1) Sök Kund");
             Console.WriteLine("2) Visa Kundbild");
@@ -144,7 +238,7 @@ namespace LifeCycleBank
 
         private static void SearchCustomers(Bank bank, string searchWord)
         {
-            var customers = CustomerService.SearchCustomer(bank, searchWord);
+            var customers = CustomerService.SearchCustomer(bank, searchWord.ToLower());
 
             if (customers.Count() != 0)
             {
