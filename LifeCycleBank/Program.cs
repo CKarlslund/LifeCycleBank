@@ -53,6 +53,15 @@ namespace LifeCycleBank
 
                     case 4:
                         {
+                            //Ta bort kund
+                            Console.Clear();
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("        Ta bort kund         ");
+                            Console.WriteLine("*****************************");
+
+                            Console.Write("Ange organisationsnummer på kunden du vill ta bort: ");
+                            Console.ReadLine();
+
                             break;
                         }
 
