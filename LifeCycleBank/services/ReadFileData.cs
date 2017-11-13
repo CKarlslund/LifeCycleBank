@@ -14,6 +14,7 @@ namespace LifeCycleBank
     {
         private static List<IAccount> accounts = new List<IAccount>();
         private static List<ICustomer> customers = new List<ICustomer>();
+        private static decimal totalBalance = 0M;
 
         public static void ReadFileFromBankData()
         {
@@ -62,7 +63,7 @@ namespace LifeCycleBank
                             Owner = customers.FirstOrDefault(x => x.Id == Convert.ToInt32(splitLine[1])),
                             Balance = Convert.ToDecimal(splitLine[2].Replace(".", ","))
                         };
-
+                        totalBalance += account.Balance;
                         accounts.Add(account);
                     }
                   
@@ -79,6 +80,11 @@ namespace LifeCycleBank
         public static List<IAccount> GetAllAccounts()
         {
             return accounts;
+        }
+
+        public static decimal GetTotalBalance()
+        {
+            return totalBalance;
         }
        
     }
