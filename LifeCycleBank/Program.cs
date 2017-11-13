@@ -72,6 +72,14 @@ namespace LifeCycleBank
 
                     case 6:
                         {
+                            Console.Clear();
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("       Ta bort konto         ");
+                            Console.WriteLine("*****************************");
+
+                            Console.Write("Ange id på kontot du vill ta bort: ");
+                            Convert.ToInt32(Console.ReadLine());
+
                             break;
                         }
 
