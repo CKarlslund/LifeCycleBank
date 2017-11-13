@@ -18,7 +18,7 @@ namespace LifeCycleBank
             do
             {
                 int choice = DisplayMenu();
-               
+
                 switch (choice)
                 {
                     case 0:
@@ -48,6 +48,41 @@ namespace LifeCycleBank
 
                     case 3:
                         {
+                            //Skapa kund
+
+                            Console.Clear();
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("         Skapa kund          ");
+                            Console.WriteLine("*****************************");
+
+                            var newCustomer = new Customer();
+
+                            Console.Write("Ange organisationsnummer: ");
+                            newCustomer.OrganizationNumber = Console.ReadLine();
+
+                            Console.Write("Ange företagsnamn: ");
+                            newCustomer.CompanyName = Console.ReadLine();
+
+                            Console.Write("Ange adress: ");
+                            newCustomer.Address = Console.ReadLine();
+
+                            Console.Write("Ange postkod: ");
+                            newCustomer.PostalCode = Console.ReadLine();
+
+                            Console.Write("Ange stad: ");
+                            newCustomer.City = Console.ReadLine();
+
+                            Console.Write("Ange region: ");
+                            newCustomer.Region = Console.ReadLine();
+
+                            Console.Write("Ange land: ");
+                            newCustomer.Country = Console.ReadLine();
+
+                            Console.Write("Ange telefonnummer: ");
+                            newCustomer.PhoneNumber = Console.ReadLine();
+
+                            //CreateCustomerAndAccount(newCustomer);
+
                             break;
                         }
 
@@ -88,7 +123,7 @@ namespace LifeCycleBank
                 Console.Clear();
 
             } while (closeProgram == false);
-            
+
         }
 
         private static int DisplayMenu()
@@ -120,7 +155,7 @@ namespace LifeCycleBank
             var path = CreateFileData.GetPath(fileName);
 
             var writer = new Writer(path, true);
-            CreateFileData.CreateFile(bank, writer); 
+            CreateFileData.CreateFile(bank, writer);
 
             Console.WriteLine("Sparar till " + fileName + "...");
             Console.WriteLine("Antal kunder: " + bank.Customers.Count);
@@ -189,9 +224,9 @@ namespace LifeCycleBank
                 Console.WriteLine();
                 Console.WriteLine("Ingen kund matchade sökningen");
             }
-
-
         }
+
+
 
     }
 }
