@@ -93,6 +93,22 @@ namespace LifeCycleBank
 
                     case 5:
                         {
+                            //Skapa konto
+
+                            Console.Clear();
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("         Skapa konto         ");
+                            Console.WriteLine("*****************************");
+
+                            Console.WriteLine();
+                            Console.WriteLine("Ange kundnummer på kunden du vill skapa konto hos:");
+                            var customerID = Convert.ToInt32(Console.ReadLine());
+
+                            Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
+                            var balance = Convert.ToInt32(Console.ReadLine());
+
+                            //CreateAccount();
+
                             break;
                         }
 
