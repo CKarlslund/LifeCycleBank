@@ -55,34 +55,46 @@ namespace LifeCycleBank
                             Console.WriteLine("         Skapa kund          ");
                             Console.WriteLine("*****************************");
 
-                            var newCustomer = new Customer();
 
-                            Console.Write("Ange organisationsnummer: ");
-                            newCustomer.OrganizationNumber = Console.ReadLine();
+                            Console.WriteLine("Ange organisationsnummer:");
+                            var organizationNumber = Console.ReadLine();
 
-                            Console.Write("Ange företagsnamn: ");
-                            newCustomer.CompanyName = Console.ReadLine();
+                            Console.WriteLine("Ange företagsnamn:");
+                            var companyName = Console.ReadLine();
 
-                            Console.Write("Ange adress: ");
-                            newCustomer.Address = Console.ReadLine();
+                            Console.WriteLine("Ange adress:");
+                            var address = Console.ReadLine();
 
-                            Console.Write("Ange postkod: ");
-                            newCustomer.PostalCode = Console.ReadLine();
+                            Console.WriteLine("Ange postkod:");
+                            var postalCode = Console.ReadLine();
 
-                            Console.Write("Ange stad: ");
-                            newCustomer.City = Console.ReadLine();
+                            Console.WriteLine("Ange stad:");
+                            var city = Console.ReadLine();
 
-                            Console.Write("Ange region: ");
-                            newCustomer.Region = Console.ReadLine();
+                            Console.WriteLine("Ange region:");
+                            var region = Console.ReadLine();
 
-                            Console.Write("Ange land: ");
-                            newCustomer.Country = Console.ReadLine();
+                            Console.WriteLine("Ange land:");
+                            var country = Console.ReadLine();
 
-                            Console.Write("Ange telefonnummer: ");
-                            newCustomer.PhoneNumber = Console.ReadLine();
+                            Console.WriteLine("Ange telefonnummer:");
+                            var phoneNumber = Console.ReadLine();
 
-                            //CreateCustomerAndAccount(newCustomer);
-
+                            var result = bank.CreateCustomer(organizationNumber, companyName, address, postalCode, city, region, country, phoneNumber);
+                            if (result == "true")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("     Kunden är nu Skapad     ");
+                                Console.WriteLine("*****************************");
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("     Något gick snett!!!     ");
+                                Console.WriteLine("*****************************");
+                            }
                             break;
                         }
 
