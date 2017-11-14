@@ -96,5 +96,10 @@ namespace LifeCycleBank
                 return ("false");
             }
         }
+
+        public bool ValidateDeleteCustomer(int customerId, List<IAccount> accounts)
+        {
+            return accounts.Sum(x => x.Balance) == 0;
+        }
     }
 }

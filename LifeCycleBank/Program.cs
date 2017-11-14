@@ -18,7 +18,7 @@ namespace LifeCycleBank
             do
             {
                 int choice = DisplayMenu();
-               
+
                 switch (choice)
                 {
                     case 0:
@@ -64,13 +64,24 @@ namespace LifeCycleBank
 
                             var result = bank.DeleteCustomer(customerId);
 
-                            if (result == "true")
+                            var customerAccounts = CustomerService.GetCustomerAccounts(bank, customerId);
+
+                            if (bank.ValidateDeleteCustomer(customerId, customerAccounts) == false)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("Kontot har fortfarande pengar");
+                                Console.WriteLine("*****************************");
+                            }
+
+                            else if (result == "true")
                             {
                                 Console.Clear();
                                 Console.WriteLine("*****************************");
                                 Console.WriteLine("   Kunden är nu bortagen.    ");
                                 Console.WriteLine("*****************************");
                             }
+
                             else if (result == "false")
                             {
                                 Console.Clear();
@@ -139,7 +150,7 @@ namespace LifeCycleBank
                 Console.Clear();
 
             } while (closeProgram == false);
-            
+
         }
 
         private static int DisplayMenu()
@@ -171,7 +182,7 @@ namespace LifeCycleBank
             var path = CreateFileData.GetPath(fileName);
 
             var writer = new Writer(path, true);
-            CreateFileData.CreateFile(bank, writer); 
+            CreateFileData.CreateFile(bank, writer);
 
             Console.WriteLine("Sparar till " + fileName + "...");
             Console.WriteLine("Antal kunder: " + bank.Customers.Count);
