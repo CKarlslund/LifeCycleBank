@@ -1,4 +1,5 @@
 ﻿using LifeCycleBank.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -67,6 +68,19 @@ namespace LifeCycleBank
             else
             {
                 throw new AccountBalanceException("The specified amount was bigger than the available sum on the credit account. Could not continue.");
+            }
+        }
+
+        public string DeleteCustomer(int customerId)
+        {
+            try
+            {
+                Customers.Remove(Customers.FirstOrDefault(x => x.Id == customerId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
             }
         }
     }

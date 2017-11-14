@@ -59,8 +59,25 @@ namespace LifeCycleBank
                             Console.WriteLine("        Ta bort kund         ");
                             Console.WriteLine("*****************************");
 
-                            Console.Write("Ange organisationsnummer på kunden du vill ta bort: ");
-                            Console.ReadLine();
+                            Console.Write("Ange kundnummer på kunden du vill ta bort:");
+                            var customerId = Convert.ToInt32(Console.ReadLine());
+
+                            var result = bank.DeleteCustomer(customerId);
+
+                            if (result == "true")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("   Kunden är nu bortagen.    ");
+                                Console.WriteLine("*****************************");
+                            }
+                            else if (result == "false")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("   Hoppsan något gick fel!   ");
+                                Console.WriteLine("*****************************");
+                            }
 
                             break;
                         }
