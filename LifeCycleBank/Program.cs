@@ -119,7 +119,24 @@ namespace LifeCycleBank
                             Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
                             var balance = Convert.ToInt32(Console.ReadLine());
 
-                            //CreateAccount();
+                            var customer = CustomerService.GetCustomer(bank, customerID);
+
+                            var result = bank.CreateAccount(customer, balance);
+
+                            if (result == "true")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("     Kontot är nu Skapat     ");
+                                Console.WriteLine("*****************************");
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("     Något gick snett!!!     ");
+                                Console.WriteLine("*****************************");
+                            }
 
                             break;
                         }
