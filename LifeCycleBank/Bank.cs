@@ -101,5 +101,17 @@ namespace LifeCycleBank
         {
             return accounts.Sum(x => x.Balance) == 0;
         }
+
+        //public bool ValidateDeleteAccount(int accountId, IBank bank)
+        //{
+        //    var account = bank.Accounts.Find(x => x.Id == accountId);
+        //    return account != null && account.Balance == 0;
+        //}
+
+        internal bool ValidateDeleteCustomer(int accountId, Bank bank)
+        {
+            var account = bank.Accounts.Find(x => x.Id == accountId);
+            return account != null && account.Balance == 0;
+        }
     }
 }
