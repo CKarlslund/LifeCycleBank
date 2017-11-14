@@ -201,6 +201,17 @@ namespace LifeCycleBank
         
         }
 
+        private static void DisplayBankData()
+        {
+            var statistics = ReadStatisticFromBankData.GetStatistics();
+
+            Console.WriteLine("Sparar till " + "Läser in bankdata.txt..." + "...");
+            Console.WriteLine("Antal kunder: " + statistics["numberOfCustomers"]);
+            Console.WriteLine("Antal konton: " + statistics["numberOfAccounts"]);
+            Console.WriteLine("Totalt saldo: " + statistics["totalBalance"] + "kr");
+        
+        }
+
         private static int DisplayMenu()
         {
             Console.WriteLine("*****************************");
