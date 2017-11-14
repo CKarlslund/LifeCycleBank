@@ -83,5 +83,18 @@ namespace LifeCycleBank
                 return ("false");
             }
         }
+
+        public string DeleteAccount(int accountId)
+        {
+            try
+            {
+                Accounts.Remove(Accounts.FirstOrDefault(x => x.Id == accountId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
     }
 }

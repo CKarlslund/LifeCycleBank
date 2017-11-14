@@ -94,8 +94,25 @@ namespace LifeCycleBank
                             Console.WriteLine("       Ta bort konto         ");
                             Console.WriteLine("*****************************");
 
-                            Console.Write("Ange id på kontot du vill ta bort: ");
-                            Convert.ToInt32(Console.ReadLine());
+                            Console.Write("Ange kontonummer på det konto du vill ta bort:");
+                            var accountId = Convert.ToInt32(Console.ReadLine());
+
+                            var result = bank.DeleteAccount(accountId);
+
+                            if (result == "true")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("   Kontot är nu bortagen.    ");
+                                Console.WriteLine("*****************************");
+                            }
+                            else if (result == "false")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("   Hoppsan något gick fel!   ");
+                                Console.WriteLine("*****************************");
+                            }
 
                             break;
                         }
