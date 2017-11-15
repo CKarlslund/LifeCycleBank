@@ -18,7 +18,7 @@ namespace LifeCycleBank.services
 
         public static ICustomer GetCustomer(IBank bank, int customerNumber)
         {
-            var customer = bank.Customers.SingleOrDefault(x => x.Id == customerNumber);
+            var customer = bank.Customers.FirstOrDefault(x => x.Id == customerNumber);
 
             return customer;
         }
