@@ -1,4 +1,5 @@
 ﻿using LifeCycleBank.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -68,6 +69,46 @@ namespace LifeCycleBank
             {
                 throw new AccountBalanceException("The specified amount was bigger than the available sum on the credit account. Could not continue.");
             }
+        }
+
+        public string DeleteCustomer(int customerId)
+        {
+            try
+            {
+                Customers.Remove(Customers.FirstOrDefault(x => x.Id == customerId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+
+        public string DeleteAccount(int accountId)
+        {
+            try
+            {
+                Accounts.Remove(Accounts.FirstOrDefault(x => x.Id == accountId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+
+
+        public bool ValidateDeleteCustomer(int customerId, List<IAccount> accounts)
+        {
+            return accounts.Sum(x => x.Balance) == 0;
+        }
+
+
+        internal bool ValidateDeleteCustomer(int accountId, Bank bank)
+        {
+
+            var account = bank.Accounts.Find(x => x.Id == accountId);
+            return account != null && account.Balance == 0;
         }
     }
 }

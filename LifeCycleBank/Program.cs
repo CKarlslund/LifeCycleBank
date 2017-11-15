@@ -18,7 +18,6 @@ namespace LifeCycleBank
 
             do
             {
-
                 int userChoice = DisplayMenu();
 
                 switch (userChoice)
@@ -88,6 +87,57 @@ namespace LifeCycleBank
 
                     case 4:
                         {
+                            //Ta bort kund
+                            Console.Clear();
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("        Ta bort kund         ");
+                            Console.WriteLine("*****************************");
+
+                            Console.WriteLine("Ange kundnummer på kunden du vill ta bort:");
+                            var customerId = Convert.ToInt32(Console.ReadLine());
+
+                            var customerAccounts = CustomerService.GetCustomerAccounts(bank, customerId);
+                            var customerCheckExists = CustomerService.GetCustomer(bank, customerId);
+
+                            if (customerCheckExists != null)
+                            {
+                                if (bank.ValidateDeleteCustomer(customerId, customerAccounts) == true)
+                                {
+                                    var result = bank.DeleteCustomer(customerId);
+
+                                    if (result == "true")
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("*****************************");
+                                        Console.WriteLine("   Kunden är nu bortagen.    ");
+                                        Console.WriteLine("*****************************");
+                                    }
+
+                                    else if (result == "false")
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("*****************************");
+                                        Console.WriteLine("   Hoppsan något gick fel!   ");
+                                        Console.WriteLine("*****************************");
+                                    }
+
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("Kontot har fortfarande pengar");
+                                    Console.WriteLine("*****************************");
+                                }
+                            }
+
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine(      "Kunden finns inte"      );
+                                Console.WriteLine("*****************************");
+                            }
                             break;
                         }
 
@@ -98,6 +148,31 @@ namespace LifeCycleBank
 
                     case 6:
                         {
+                            Console.Clear();
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("       Ta bort konto         ");
+                            Console.WriteLine("*****************************");
+
+                            Console.Write("Ange kontonummer på det konto du vill ta bort:");
+                            var accountId = Convert.ToInt32(Console.ReadLine());
+
+                            if (bank.ValidateDeleteCustomer(accountId, bank) == false)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("Kontot har fortfarande pengar");
+                                Console.WriteLine("*****************************");
+                            }
+
+                            else
+                            {
+                                bank.DeleteAccount(accountId);
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("    Kontot är nu bortaget    ");
+                                Console.WriteLine("*****************************");
+                            }
+
                             break;
                         }
 
@@ -194,7 +269,7 @@ namespace LifeCycleBank
                 Console.Clear();
 
             } while (closeProgram == false);
-            
+
         }
 
         private static void DisplayBankData()
@@ -266,7 +341,7 @@ namespace LifeCycleBank
             var path = CreateFileData.GetPath(fileName);
 
             var writer = new Writer(path, true);
-            CreateFileData.CreateFile(bank, writer); 
+            CreateFileData.CreateFile(bank, writer);
 
             Console.WriteLine("Sparar till " + fileName + "...");
             Console.WriteLine("Antal kunder: " + bank.Customers.Count);
