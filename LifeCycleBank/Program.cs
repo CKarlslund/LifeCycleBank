@@ -15,30 +15,9 @@ namespace LifeCycleBank
             ReadFileData.ReadFileFromBankData();
             var bank = new Bank();
             bool closeProgram = false;
-            int choice = 11;
 
             do
             {
-
-                //try
-                //{
-                //    int userChoice = DisplayMenu();
-                //    if (userChoice > 9)
-                //    {
-                //        Console.WriteLine();
-                //        Console.WriteLine("Du måste ange ett tal mellan 0-9.");
-
-                //    } else
-                //    {
-                //        choice = userChoice;
-                //    }
-                //}
-                //catch 
-                //{
-
-                //    Console.WriteLine();
-                //    Console.WriteLine("Du måste ange ett tal.");
-                //}
 
                 int userChoice = DisplayMenu();
 
