@@ -121,22 +121,37 @@ namespace LifeCycleBank
 
                             var customer = CustomerService.GetCustomer(bank, customerID);
 
-                            var result = bank.CreateAccount(customer, balance);
-
-                            if (result == "true")
+                            if (customer != null)
                             {
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("     Kontot är nu Skapat     ");
-                                Console.WriteLine("*****************************");
+                                var result = bank.CreateAccount(customer, balance);
+
+                                if (result == "true")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("     Kontot är nu Skapat     ");
+                                    Console.WriteLine("*****************************");
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("     Något gick snett!!!     ");
+                                    Console.WriteLine("*****************************");
+                                }
                             }
                             else
                             {
                                 Console.Clear();
                                 Console.WriteLine("*****************************");
-                                Console.WriteLine("     Något gick snett!!!     ");
+                                Console.WriteLine("   Kundnummret finns inte    ");
                                 Console.WriteLine("*****************************");
                             }
+
+
+                            
+
+
 
                             break;
                         }
