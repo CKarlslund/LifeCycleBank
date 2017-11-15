@@ -127,6 +127,12 @@ namespace LifeCycleBank
                             try
                             {
                                 debitAccount = DebitAccount();
+                                if (debitAccount == null)
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Det angivna kontot finns inte.");
+                                    break;
+                                }
                                 amuontToTransfer = Amuont();
                             }
                             catch
@@ -147,6 +153,12 @@ namespace LifeCycleBank
                             try
                             {
                                 creditAccount = CreditAccount();
+                                if (creditAccount == null)
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Det angivna kontot finns inte.");
+                                    break;
+                                }
                                 amuontToTransfer = Amuont();
                             }
                             catch
@@ -169,6 +181,18 @@ namespace LifeCycleBank
                             {
                                 creditAccount = CreditAccount();
                                 debitAccount = DebitAccount();
+                                if (debitAccount == null)
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Det angivna kontot finns inte.");
+                                    break;
+
+                                } else if (debitAccount == null)
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Det angivna mottagar kontot finns inte.");
+                                    break;
+                                }
                                 amuontToTransfer = Amuont();
                             }
                             catch
