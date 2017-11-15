@@ -421,8 +421,6 @@ namespace LifeCycleBank
 
         private static void CreateFileAndDisplayStatistics(Bank bank)
         {
-            var statistics = ReadStatisticFromBankData.GetStatistics();
-
             var fileName = DateTime.Now.ToString("yyyyMMdd-HHmm") + ".txt";
             var path = CreateFileData.GetPath(fileName);
 
@@ -432,7 +430,7 @@ namespace LifeCycleBank
             Console.WriteLine("Sparar till " + fileName + "...");
             Console.WriteLine("Antal kunder: " + bank.Customers.Count);
             Console.WriteLine("Antal konton: " + bank.Accounts.Count);
-            Console.WriteLine("Totalt saldo: " + statistics["totalBalance"]);
+            Console.WriteLine("Totalt saldo: " + bank.TotalBalance);
         }
 
         private static void SearchCustomers(Bank bank, string searchWord)

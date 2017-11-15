@@ -27,11 +27,13 @@ namespace LifeCycleBank
         public int Id { get; set; }
         public List<IAccount> Accounts { get; set; }
         public List<ICustomer> Customers { get; set; }
+        public decimal TotalBalance { get; set; }
 
         public void GetBankData()
         {
             Accounts = ReadFileData.GetAllAccounts();
             Customers = ReadFileData.GetAllCustomers();
+            TotalBalance = ReadFileData.GetTotalBalance();
         }
 
         public void CreateDeposit(IAccount toAccount, decimal amount)
