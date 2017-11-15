@@ -11,14 +11,14 @@ namespace LifeCycleBank.services
     {
         public static List<ICustomer> SearchCustomer(IBank bank,string searchWord)
         {
-            var customers = bank.Customers.Where(x => x.CompanyName == searchWord || x.City == searchWord).ToList();
+            var customers = bank.Customers.Where(x => x.CompanyName.ToLower() == searchWord || x.City.ToLower() == searchWord).ToList();
 
             return customers;
         }
 
         public static ICustomer GetCustomer(IBank bank, int customerNumber)
         {
-            var customer = bank.Customers.SingleOrDefault(x => x.Id == customerNumber);
+            var customer = bank.Customers.FirstOrDefault(x => x.Id == customerNumber);
 
             return customer;
         }

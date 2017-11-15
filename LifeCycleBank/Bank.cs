@@ -98,17 +98,43 @@ namespace LifeCycleBank
             }
         }
 
-        public string CreateAccount(ICustomer customerId, int balance)
+        public string DeleteAccount(int accountId)
         {
             try
             {
-                Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customerId, Balance = balance });
+                Accounts.Remove(Accounts.FirstOrDefault(x => x.Id == accountId));
                 return ("true");
             }
             catch (Exception)
             {
                 return ("false");
             }
+        }
+        
+        public string DeleteCustomer(int customerId)
+        {
+            try
+            {
+                Customers.Remove(Customers.FirstOrDefault(x => x.Id == customerId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+
+        public bool ValidateDeleteCustomer(int customerId, List<IAccount> accounts)
+        {
+            return accounts.Sum(x => x.Balance) == 0;
+        }
+
+
+        internal bool ValidateDeleteCustomer(int accountId, Bank bank)
+        {
+
+            var account = bank.Accounts.Find(x => x.Id == accountId);
+            return account != null && account.Balance == 0;
         }
     }
 }
