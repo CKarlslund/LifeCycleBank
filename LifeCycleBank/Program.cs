@@ -19,28 +19,30 @@ namespace LifeCycleBank
 
             do
             {
-                
-                try
-                {
-                    int userChoice = DisplayMenu();
-                    if (userChoice > 9)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("Du måste ange ett tal mellan 0-9.");
 
-                    } else
-                    {
-                        choice = userChoice;
-                    }
-                }
-                catch 
-                {
+                //try
+                //{
+                //    int userChoice = DisplayMenu();
+                //    if (userChoice > 9)
+                //    {
+                //        Console.WriteLine();
+                //        Console.WriteLine("Du måste ange ett tal mellan 0-9.");
 
-                    Console.WriteLine();
-                    Console.WriteLine("Du måste ange ett tal.");
-                }
+                //    } else
+                //    {
+                //        choice = userChoice;
+                //    }
+                //}
+                //catch 
+                //{
 
-                switch (choice)
+                //    Console.WriteLine();
+                //    Console.WriteLine("Du måste ange ett tal.");
+                //}
+
+                int userChoice = DisplayMenu();
+
+                switch (userChoice)
                 {
                     case 0:
                         {
@@ -61,6 +63,7 @@ namespace LifeCycleBank
                                 if (int.TryParse(searchWord, out intValue))
                                 {
                                     Console.WriteLine("Du måste ange ett ord.");
+                                    break;
                                 }
                                 else
                                 {
@@ -90,6 +93,7 @@ namespace LifeCycleBank
                                 else
                                 {
                                     Console.WriteLine("Du måste ange ett nummer.");
+                                    break;
                                 }
                             } else
                             {
@@ -227,26 +231,52 @@ namespace LifeCycleBank
 
         private static int DisplayMenu()
         {
-            Console.WriteLine("*****************************");
-            Console.WriteLine("Välkommen till LifeCycleBank");
-            Console.WriteLine("*****************************");
-            DisplayBankData();
-            Console.WriteLine();
-            Console.WriteLine("HUVUDMENY");
-            Console.WriteLine("0) Avsluta och Spara");
-            Console.WriteLine("1) Sök Kund");
-            Console.WriteLine("2) Visa Kundbild");
-            Console.WriteLine("3) Skapa kund");
-            Console.WriteLine("4) Ta bort kund");
-            Console.WriteLine("5) Skapa konto");
-            Console.WriteLine("6) Ta bort konto");
-            Console.WriteLine("7) Insättning");
-            Console.WriteLine("8) Uttag");
-            Console.WriteLine("9) Överföring");
-            Console.Write("Skriv in nummret på dit val: ");
-            var userChoice = Convert.ToInt32(Console.ReadLine());
+            do
+            {
+                Console.WriteLine("*****************************");
+                Console.WriteLine("Välkommen till LifeCycleBank");
+                Console.WriteLine("*****************************");
+                DisplayBankData();
+                Console.WriteLine();
+                Console.WriteLine("HUVUDMENY");
+                Console.WriteLine("0) Avsluta och Spara");
+                Console.WriteLine("1) Sök Kund");
+                Console.WriteLine("2) Visa Kundbild");
+                Console.WriteLine("3) Skapa kund");
+                Console.WriteLine("4) Ta bort kund");
+                Console.WriteLine("5) Skapa konto");
+                Console.WriteLine("6) Ta bort konto");
+                Console.WriteLine("7) Insättning");
+                Console.WriteLine("8) Uttag");
+                Console.WriteLine("9) Överföring");
+                Console.Write("Skriv in nummret på dit val: ");
+                int userChoice = -1;
+                try
+                {
+                    userChoice = Convert.ToInt32(Console.ReadLine());
 
-            return userChoice;
+                    if (userChoice >= 0 && userChoice < 10)
+                    {
+                        return userChoice;
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Error: Felaktigt val");
+                        Console.ReadLine();
+                        Console.Clear();
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Error: Felaktigt val");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+
+            } while (true);
+
         }
 
         private static void CreateFileAndDisplayStatistics(Bank bank)
