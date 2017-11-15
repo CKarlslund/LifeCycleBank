@@ -1,4 +1,5 @@
 ﻿using LifeCycleBank.Interfaces;
+using LifeCycleBank.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace LifeCycleBank
             get
             {
                 if (_instance == null)
-                _instance = new Bank();
+                    _instance = new Bank();
                 return _instance;
             }
         }
@@ -71,16 +72,29 @@ namespace LifeCycleBank
             }
         }
 
-        public string DeleteCustomer(int customerId)
+        public string CreateCustomer(string organizationNumber, string companyName, string address, string postalCode, string city, string country, string region, string phoneNumber)
         {
             try
             {
-                Customers.Remove(Customers.FirstOrDefault(x => x.Id == customerId));
-                return ("true");
+                var customer = new Customer
+                {
+                    Id = Customers.Max(x => x.Id) + 1,
+                    OrganizationNumber = organizationNumber,
+                    CompanyName = companyName,
+                    Address = address,
+                    PostalCode = postalCode,
+                    City = city,
+                    Country = country,
+                    Region = region,
+                    PhoneNumber = phoneNumber
+                };
+                Customers.Add(customer);
+                Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customer, Balance = 0 });
+                return "true";
             }
             catch (Exception)
             {
-                return ("false");
+                return "false";
             }
         }
 
@@ -96,7 +110,19 @@ namespace LifeCycleBank
                 return ("false");
             }
         }
-
+        
+        public string DeleteCustomer(int customerId)
+        {
+            try
+            {
+                Customers.Remove(Customers.FirstOrDefault(x => x.Id == customerId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
 
         public bool ValidateDeleteCustomer(int customerId, List<IAccount> accounts)
         {

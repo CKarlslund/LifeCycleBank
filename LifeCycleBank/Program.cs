@@ -82,6 +82,53 @@ namespace LifeCycleBank
 
                     case 3:
                         {
+                            //Skapa kund
+
+                            Console.Clear();
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("         Skapa kund          ");
+                            Console.WriteLine("*****************************");
+
+
+                            Console.WriteLine("Ange organisationsnummer:");
+                            var organizationNumber = Console.ReadLine();
+
+                            Console.WriteLine("Ange företagsnamn:");
+                            var companyName = Console.ReadLine();
+
+                            Console.WriteLine("Ange adress:");
+                            var address = Console.ReadLine();
+
+                            Console.WriteLine("Ange postkod:");
+                            var postalCode = Console.ReadLine();
+
+                            Console.WriteLine("Ange stad:");
+                            var city = Console.ReadLine();
+
+                            Console.WriteLine("Ange region:");
+                            var region = Console.ReadLine();
+
+                            Console.WriteLine("Ange land:");
+                            var country = Console.ReadLine();
+
+                            Console.WriteLine("Ange telefonnummer:");
+                            var phoneNumber = Console.ReadLine();
+
+                            var result = bank.CreateCustomer(organizationNumber, companyName, address, postalCode, city, region, country, phoneNumber);
+                            if (result == "true")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("     Kunden är nu Skapad     ");
+                                Console.WriteLine("*****************************");
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("     Något gick snett!!!     ");
+                                Console.WriteLine("*****************************");
+                            }
                             break;
                         }
 
@@ -143,6 +190,54 @@ namespace LifeCycleBank
 
                     case 5:
                         {
+                            //Skapa konto
+
+                            Console.Clear();
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("         Skapa konto         ");
+                            Console.WriteLine("*****************************");
+
+                            Console.WriteLine();
+                            Console.WriteLine("Ange kundnummer på kunden du vill skapa konto hos:");
+                            var customerID = Convert.ToInt32(Console.ReadLine());
+
+                            Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
+                            var balance = Convert.ToInt32(Console.ReadLine());
+
+                            var customer = CustomerService.GetCustomer(bank, customerID);
+
+                            if (customer != null)
+                            {
+                                var result = bank.CreateAccount(customer, balance);
+
+                                if (result == "true")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("     Kontot är nu Skapat     ");
+                                    Console.WriteLine("*****************************");
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("     Något gick snett!!!     ");
+                                    Console.WriteLine("*****************************");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("*****************************");
+                                Console.WriteLine("   Kundnummret finns inte    ");
+                                Console.WriteLine("*****************************");
+                            }
+
+
+                            
+
+
+
                             break;
                         }
 
@@ -270,18 +365,9 @@ namespace LifeCycleBank
 
             } while (closeProgram == false);
 
+
         }
 
-        private static void DisplayBankData()
-        {
-            var statistics = ReadStatisticFromBankData.GetStatistics();
-
-            Console.WriteLine("Sparar till " + "Läser in bankdata.txt..." + "...");
-            Console.WriteLine("Antal kunder: " + statistics["numberOfCustomers"]);
-            Console.WriteLine("Antal konton: " + statistics["numberOfAccounts"]);
-            Console.WriteLine("Totalt saldo: " + statistics["totalBalance"] + "kr");
-        
-        }
 
         private static int DisplayMenu()
         {
@@ -410,9 +496,9 @@ namespace LifeCycleBank
                 Console.WriteLine();
                 Console.WriteLine("Ingen kund matchade sökningen");
             }
-
-
         }
+
+
 
         public static void Deposit(Bank bank,IAccount toAccount, decimal amount)
         {
