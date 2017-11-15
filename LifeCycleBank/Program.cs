@@ -59,37 +59,51 @@ namespace LifeCycleBank
                             Console.WriteLine("        Ta bort kund         ");
                             Console.WriteLine("*****************************");
 
-                            Console.Write("Ange kundnummer på kunden du vill ta bort:");
+                            Console.WriteLine("Ange kundnummer på kunden du vill ta bort:");
                             var customerId = Convert.ToInt32(Console.ReadLine());
 
-                            var result = bank.DeleteCustomer(customerId);
-
                             var customerAccounts = CustomerService.GetCustomerAccounts(bank, customerId);
+                            var customerCheckExists = CustomerService.GetCustomer(bank, customerId);
 
-                            if (bank.ValidateDeleteCustomer(customerId, customerAccounts) == false)
+                            if (customerCheckExists != null)
+                            {
+                                if (bank.ValidateDeleteCustomer(customerId, customerAccounts) == true)
+                                {
+                                    var result = bank.DeleteCustomer(customerId);
+
+                                    if (result == "true")
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("*****************************");
+                                        Console.WriteLine("   Kunden är nu bortagen.    ");
+                                        Console.WriteLine("*****************************");
+                                    }
+
+                                    else if (result == "false")
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("*****************************");
+                                        Console.WriteLine("   Hoppsan något gick fel!   ");
+                                        Console.WriteLine("*****************************");
+                                    }
+
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("Kontot har fortfarande pengar");
+                                    Console.WriteLine("*****************************");
+                                }
+                            }
+
+                            else
                             {
                                 Console.Clear();
                                 Console.WriteLine("*****************************");
-                                Console.WriteLine("Kontot har fortfarande pengar");
+                                Console.WriteLine(      "Kunden finns inte"      );
                                 Console.WriteLine("*****************************");
                             }
-
-                            else if (result == "true")
-                            {
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("   Kunden är nu bortagen.    ");
-                                Console.WriteLine("*****************************");
-                            }
-
-                            else if (result == "false")
-                            {
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("   Hoppsan något gick fel!   ");
-                                Console.WriteLine("*****************************");
-                            }
-
                             break;
                         }
 
@@ -109,7 +123,7 @@ namespace LifeCycleBank
                             var accountId = Convert.ToInt32(Console.ReadLine());
 
                             if (bank.ValidateDeleteCustomer(accountId, bank) == false)
-                            {                                
+                            {
                                 Console.Clear();
                                 Console.WriteLine("*****************************");
                                 Console.WriteLine("Kontot har fortfarande pengar");
