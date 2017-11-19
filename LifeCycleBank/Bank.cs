@@ -98,6 +98,19 @@ namespace LifeCycleBank
             }
         }
 
+        public string CreateAccount(ICustomer customerId, int balance)
+        {
+            try
+            {
+                Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customerId, Balance = balance });
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+
         public string DeleteAccount(int accountId)
         {
             try
