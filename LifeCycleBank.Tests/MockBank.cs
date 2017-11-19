@@ -29,8 +29,8 @@ namespace LifeCycleBank.Tests
                 Country = "Sweden",
                 PhoneNumber = "0921 - 12 34 65"
                 };
-            var customer2 = new Customer() { Id = 1002, };
-            var customer3 = new Customer() { Id = 1002, };
+            var customer2 = new Customer() { Id = 1002, CompanyName = "Bengans Import AB", City = "Malmö"};
+            var customer3 = new Customer() { Id = 1003, CompanyName = "Sveas Mode", City = "Luleå"};
 
             var customers = new List<ICustomer>() {customer1, customer2, customer3};
 
