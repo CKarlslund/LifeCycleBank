@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LifeCycleBank": {
+      "commandName": "Project",
+      "commandLineArgs": "bankdata.txt"
+    }
+  }
+}

@@ -76,28 +76,37 @@ namespace LifeCycleBank
 
         public string CreateCustomer(string organizationNumber, string companyName, string address, string postalCode, string city, string country, string region, string phoneNumber)
         {
-            try
+            if (!string.IsNullOrEmpty(organizationNumber) &&
+                !string.IsNullOrEmpty(companyName) &&
+                !string.IsNullOrEmpty(address) &&
+                !string.IsNullOrEmpty(postalCode) &&
+                !string.IsNullOrEmpty(city))
             {
-                var customer = new Customer
+                try
                 {
-                    Id = Customers.Max(x => x.Id) + 1,
-                    OrganizationNumber = organizationNumber,
-                    CompanyName = companyName,
-                    Address = address,
-                    PostalCode = postalCode,
-                    City = city,
-                    Country = country,
-                    Region = region,
-                    PhoneNumber = phoneNumber
-                };
-                Customers.Add(customer);
-                Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customer, Balance = 0 });
-                return "true";
+                    var customer = new Customer
+                    {
+                        Id = Customers.Max(x => x.Id) + 1,
+                        OrganizationNumber = organizationNumber,
+                        CompanyName = companyName,
+                        Address = address,
+                        PostalCode = postalCode,
+                        City = city,
+                        Country = country,
+                        Region = region,
+                        PhoneNumber = phoneNumber
+                    };
+                    Customers.Add(customer);
+                    Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customer, Balance = 0 });
+                    return "true";
+                }
+                catch (Exception)
+                {
+                    return "false";
+                }
             }
-            catch (Exception)
-            {
+            else
                 return "false";
-            }
         }
 
         public string CreateAccount(ICustomer customerId, decimal balance)
