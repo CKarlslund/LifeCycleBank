@@ -2,6 +2,7 @@
 using LifeCycleBank.Models;
 using LifeCycleBank.services;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -203,6 +204,7 @@ namespace LifeCycleBank
                             int.TryParse(Console.ReadLine(), out customerID);
 
                             Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
+
                             int balance;
                             int.TryParse(Console.ReadLine(), out balance);
 
@@ -246,26 +248,41 @@ namespace LifeCycleBank
                             Console.WriteLine("*****************************");
 
                             Console.Write("Ange kontonummer på det konto du vill ta bort:");
+
                             int accountId;
                             int.TryParse(Console.ReadLine(), out accountId);
 
                             if (bank.ValidateDeleteCustomer(accountId, bank) == false)
                             {
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("Kontot har fortfarande pengar");
-                                Console.WriteLine("*****************************");
+                                int ID;
+                                if (int.TryParse(accountId, out ID))
+                                {
+                                    if (bank.ValidateDeleteCustomer(ID, bank) == false)
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("*****************************");
+                                        Console.WriteLine("Kontot har fortfarande pengar");
+                                        Console.WriteLine("*****************************");
+                                    }
+                                    else
+                                    {
+                                        bank.DeleteAccount(ID);
+                                        Console.Clear();
+                                        Console.WriteLine("*****************************");
+                                        Console.WriteLine("    Kontot är nu bortaget    ");
+                                        Console.WriteLine("*****************************");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Du måste ange ett nummer.");
+                                    break;
+                                }
                             }
-
                             else
                             {
-                                bank.DeleteAccount(accountId);
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("    Kontot är nu bortaget    ");
-                                Console.WriteLine("*****************************");
+                                Console.WriteLine("Du måste ange ett nummer.");
                             }
-
                             break;
                         }
 
@@ -585,7 +602,7 @@ namespace LifeCycleBank
         public static decimal Amuont()
         {
             Console.WriteLine("Belopp:");
-            var amuontToTransfer = Convert.ToDecimal(Console.ReadLine());
+            var amuontToTransfer = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
 
             return amuontToTransfer;
         }
