@@ -199,10 +199,12 @@ namespace LifeCycleBank
 
                             Console.WriteLine();
                             Console.WriteLine("Ange kundnummer på kunden du vill skapa konto hos:");
-                            var customerID = Convert.ToInt32(Console.ReadLine());
+                            int customerID;
+                            int.TryParse(Console.ReadLine(), out customerID);
 
                             Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
-                            var balance = Convert.ToInt32(Console.ReadLine());
+                            int balance;
+                            int.TryParse(Console.ReadLine(), out balance);
 
                             var customer = CustomerService.GetCustomer(bank, customerID);
 
@@ -244,7 +246,8 @@ namespace LifeCycleBank
                             Console.WriteLine("*****************************");
 
                             Console.Write("Ange kontonummer på det konto du vill ta bort:");
-                            var accountId = Convert.ToInt32(Console.ReadLine());
+                            int accountId;
+                            int.TryParse(Console.ReadLine(), out accountId);
 
                             if (bank.ValidateDeleteCustomer(accountId, bank) == false)
                             {
