@@ -1,4 +1,6 @@
 ﻿using LifeCycleBank.Interfaces;
+using LifeCycleBank.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +15,7 @@ namespace LifeCycleBank
             get
             {
                 if (_instance == null)
-                _instance = new Bank();
+                    _instance = new Bank();
                 return _instance;
             }
         }
@@ -25,11 +27,13 @@ namespace LifeCycleBank
         public int Id { get; set; }
         public List<IAccount> Accounts { get; set; }
         public List<ICustomer> Customers { get; set; }
+        public decimal TotalBalance { get; set; }
 
         public void GetBankData()
         {
             Accounts = ReadFileData.GetAllAccounts();
             Customers = ReadFileData.GetAllCustomers();
+            TotalBalance = ReadFileData.GetTotalBalance();
         }
 
         public void CreateDeposit(IAccount toAccount, decimal amount)
@@ -68,6 +72,84 @@ namespace LifeCycleBank
             {
                 throw new AccountBalanceException("The specified amount was bigger than the available sum on the credit account. Could not continue.");
             }
+        }
+
+        public string CreateCustomer(string organizationNumber, string companyName, string address, string postalCode, string city, string country, string region, string phoneNumber)
+        {
+            try
+            {
+                var customer = new Customer
+                {
+                    Id = Customers.Max(x => x.Id) + 1,
+                    OrganizationNumber = organizationNumber,
+                    CompanyName = companyName,
+                    Address = address,
+                    PostalCode = postalCode,
+                    City = city,
+                    Country = country,
+                    Region = region,
+                    PhoneNumber = phoneNumber
+                };
+                Customers.Add(customer);
+                Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customer, Balance = 0 });
+                return "true";
+            }
+            catch (Exception)
+            {
+                return "false";
+            }
+        }
+
+        public string CreateAccount(ICustomer customerId, int balance)
+        {
+            try
+            {
+                Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customerId, Balance = balance });
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+
+        public string DeleteAccount(int accountId)
+        {
+            try
+            {
+                Accounts.Remove(Accounts.FirstOrDefault(x => x.Id == accountId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+        
+        public string DeleteCustomer(int customerId)
+        {
+            try
+            {
+                Customers.Remove(Customers.FirstOrDefault(x => x.Id == customerId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+
+        public bool ValidateDeleteCustomer(int customerId, List<IAccount> accounts)
+        {
+            return accounts.Sum(x => x.Balance) == 0;
+        }
+
+
+        internal bool ValidateDeleteCustomer(int accountId, Bank bank)
+        {
+
+            var account = bank.Accounts.Find(x => x.Id == accountId);
+            return account != null && account.Balance == 0;
         }
     }
 }
