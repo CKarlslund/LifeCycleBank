@@ -13,7 +13,7 @@ namespace LifeCycleBank.services
         public static string GetPathToLatestFile()
         {
             var path = @"bankdata";
-            if(String.IsNullOrEmpty(path))
+            if(!String.IsNullOrEmpty(path))
             {
                 var directory = new DirectoryInfo(path);
                 var latestFile = directory.GetFiles()
