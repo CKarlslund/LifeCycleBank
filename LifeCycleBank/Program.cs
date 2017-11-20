@@ -2,6 +2,7 @@
 using LifeCycleBank.Models;
 using LifeCycleBank.services;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -202,7 +203,7 @@ namespace LifeCycleBank
                             var customerID = Convert.ToInt32(Console.ReadLine());
 
                             Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
-                            var balance = Convert.ToInt32(Console.ReadLine());
+                            var balance = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture));
 
                             var customer = CustomerService.GetCustomer(bank, customerID);
 
@@ -582,7 +583,7 @@ namespace LifeCycleBank
         public static decimal Amuont()
         {
             Console.WriteLine("Belopp:");
-            var amuontToTransfer = Convert.ToDecimal(Console.ReadLine());
+            var amuontToTransfer = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
 
             return amuontToTransfer;
         }
