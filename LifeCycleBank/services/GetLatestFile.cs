@@ -13,12 +13,16 @@ namespace LifeCycleBank.services
         public static string GetPathToLatestFile()
         {
             var path = @"bankdata";
-            var directory = new DirectoryInfo(path);
-            var latestFile = directory.GetFiles()
-                               .OrderByDescending(f => GetDateFromFileName(f.Name))
-                               .First();
+            if(!String.IsNullOrEmpty(path))
+            {
+                var directory = new DirectoryInfo(path);
+                var latestFile = directory.GetFiles()
+                                   .OrderByDescending(f => GetDateFromFileName(f.Name))
+                                   .First();
 
-            return latestFile.FullName;
+                return latestFile.FullName;
+            }
+            return "Gick inte hitta mappen med filen";
         }
 
         public static DateTime GetDateFromFileName(string fileName)
