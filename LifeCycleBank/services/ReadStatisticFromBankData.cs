@@ -9,7 +9,6 @@ namespace LifeCycleBank
         public static Dictionary<string, string> GetStatistics()
         {
             var statistics = new Dictionary<string, string>();
-            ReadFileData.ReadFileFromBankData();
             var accounts = ReadFileData.GetAllAccounts();
             var customers = ReadFileData.GetAllCustomers();
             var balance = 0M;
