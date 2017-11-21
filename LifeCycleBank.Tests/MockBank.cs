@@ -120,7 +120,7 @@ namespace LifeCycleBank.Tests
                 return "false";
         }
 
-        public string CreateAccount(ICustomer customerId, int balance)
+        public string CreateAccount(ICustomer customerId, decimal balance)
         {
             try
             {
