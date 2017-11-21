@@ -45,10 +45,19 @@ namespace LifeCycleBank.Tests
         }
 
         [Fact]
-        public void Can_Enter_Partial_SerchTest()
+        public void Can_Enter_Partial_Search()
         {
             var bank = new MockBank();
             var customers = CustomerService.SearchCustomer(bank, "Berg ");
+
+            Assert.Equal(1, customers.Count);
+        }
+
+        [Fact]
+        public void Search_Disregards_Case()
+        {
+            var bank = new MockBank();
+            var customers = CustomerService.SearchCustomer(bank, "berg");
 
             Assert.Equal(1, customers.Count);
         }
