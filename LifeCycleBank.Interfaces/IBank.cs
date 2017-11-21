@@ -14,5 +14,7 @@ namespace LifeCycleBank.Interfaces
         void CreateDeposit(IAccount toAccount, decimal amount);
         void CreateWithdrawal(IAccount fromAaccount, decimal amount);
         void CreateTransaction(IAccount fromAccount, IAccount toAccount, decimal amount);
+        string DeleteAccount(int accountId);
+        string DeleteCustomer(int customerId);
     }
 }

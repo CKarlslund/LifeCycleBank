@@ -72,5 +72,21 @@ namespace LifeCycleBank.Tests
 
             Assert.Throws<AccountBalanceException>(() => _bank.CreateTransaction(fromAccount, toAccount, 400));
         }
+
+        [Fact]
+        public void Can_Delete_Customer()
+        {
+            var customer = _bank.DeleteCustomer(1092);
+
+            Assert.Equal("true", customer);
+        }
+
+        [Fact]
+        public void Can_Delete_Account()
+        {
+            var account = _bank.DeleteAccount(13013);
+
+            Assert.Equal("true", account);
+        }
     }
 }
