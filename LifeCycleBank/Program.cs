@@ -163,49 +163,57 @@ namespace LifeCycleBank
                             Console.WriteLine("*****************************");
 
                             Console.WriteLine("Ange kundnummer på kunden du vill ta bort:");
-                            var customerId = Convert.ToInt32(Console.ReadLine());
+                            var customerId = Console.ReadLine();
 
-                            var customerAccounts = CustomerService.GetCustomerAccounts(bank, customerId);
-                            var customerCheckExists = CustomerService.GetCustomer(bank, customerId);
-
-                            if (customerCheckExists != null)
+                            int value;
+                            if (int.TryParse(customerId, out value))
                             {
-                                if (bank.ValidateDeleteCustomer(customerId, customerAccounts) == true)
+                                var customerAccounts = CustomerService.GetCustomerAccounts(bank, value);
+                                var customerCheckExists = CustomerService.GetCustomer(bank, value);
+
+                                if (customerCheckExists != null)
                                 {
-                                    var result = bank.DeleteCustomer(customerId);
+                                    if (bank.ValidateDeleteCustomer(value, customerAccounts) == true)
+                                    {
+                                        var result = bank.DeleteCustomer(value);
 
-                                    if (result == "true")
+                                        if (result == "true")
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("*****************************");
+                                            Console.WriteLine("   Kunden är nu bortagen.    ");
+                                            Console.WriteLine("*****************************");
+                                        }
+
+                                        else if (result == "false")
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("*****************************");
+                                            Console.WriteLine("   Hoppsan något gick fel!   ");
+                                            Console.WriteLine("*****************************");
+                                        }
+
+                                    }
+                                    else
                                     {
                                         Console.Clear();
                                         Console.WriteLine("*****************************");
-                                        Console.WriteLine("   Kunden är nu bortagen.    ");
+                                        Console.WriteLine("Kontot har fortfarande pengar");
                                         Console.WriteLine("*****************************");
                                     }
-
-                                    else if (result == "false")
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("*****************************");
-                                        Console.WriteLine("   Hoppsan något gick fel!   ");
-                                        Console.WriteLine("*****************************");
-                                    }
-
                                 }
                                 else
                                 {
                                     Console.Clear();
                                     Console.WriteLine("*****************************");
-                                    Console.WriteLine("Kontot har fortfarande pengar");
+                                    Console.WriteLine("Kunden finns inte");
                                     Console.WriteLine("*****************************");
                                 }
                             }
-
                             else
                             {
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("Kunden finns inte");
-                                Console.WriteLine("*****************************");
+                                Console.WriteLine("Du måste ange ett nummer.");
+                                break;
                             }
                             break;
                         }
@@ -284,24 +292,31 @@ namespace LifeCycleBank
                             Console.WriteLine("*****************************");
 
                             Console.Write("Ange kontonummer på det konto du vill ta bort:");
-                            var accountId = Convert.ToInt32(Console.ReadLine());
+                            var accountId = Console.ReadLine();
 
-                            if (bank.ValidateDeleteCustomer(accountId, bank) == false)
+                            int value;
+
+                            if (int.TryParse(accountId, out value))
                             {
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("Kontot har fortfarande pengar");
-                                Console.WriteLine("*****************************");
+                                if (bank.ValidateDeleteCustomer(value, bank) == false)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("Kontot har fortfarande pengar");
+                                    Console.WriteLine("*****************************");
+                                }
+
+                                else
+                                {
+                                    bank.DeleteAccount(value);
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("    Kontot är nu bortaget    ");
+                                    Console.WriteLine("*****************************");
+                                }
+
                             }
 
-                            else
-                            {
-                                bank.DeleteAccount(accountId);
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("    Kontot är nu bortaget    ");
-                                Console.WriteLine("*****************************");
-                            }
 
                             break;
                         }
