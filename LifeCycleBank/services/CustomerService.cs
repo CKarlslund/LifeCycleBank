@@ -11,7 +11,10 @@ namespace LifeCycleBank.services
     {
         public static List<ICustomer> SearchCustomer(IBank bank,string searchWord)
         {
-            var customers = bank.Customers.Where(x => x.CompanyName.ToLower() == searchWord || x.City.ToLower() == searchWord).ToList();
+
+            var lowerInvariantSearchTerm = searchWord.Trim().ToLowerInvariant();
+
+            var customers = bank.Customers.Where(x => x.CompanyName.ToLowerInvariant().Contains(lowerInvariantSearchTerm) || x.City.ToLowerInvariant().Contains(lowerInvariantSearchTerm)).ToList();
 
             return customers;
         }
