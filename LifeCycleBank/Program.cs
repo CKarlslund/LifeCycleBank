@@ -250,14 +250,13 @@ namespace LifeCycleBank
                             Console.Write("Ange kontonummer på det konto du vill ta bort:");
 
                             int accountId;
-                            int.TryParse(Console.ReadLine(), out accountId);
+                            var isInt = int.TryParse(Console.ReadLine(), out accountId);
 
                             if (bank.ValidateDeleteCustomer(accountId, bank) == false)
                             {
-                                int ID;
-                                if (int.TryParse(accountId, out ID))
+                                if (isInt)
                                 {
-                                    if (bank.ValidateDeleteCustomer(ID, bank) == false)
+                                    if (bank.ValidateDeleteCustomer(accountId, bank) == false)
                                     {
                                         Console.Clear();
                                         Console.WriteLine("*****************************");
@@ -266,7 +265,7 @@ namespace LifeCycleBank
                                     }
                                     else
                                     {
-                                        bank.DeleteAccount(ID);
+                                        bank.DeleteAccount(accountId);
                                         Console.Clear();
                                         Console.WriteLine("*****************************");
                                         Console.WriteLine("    Kontot är nu bortaget    ");
