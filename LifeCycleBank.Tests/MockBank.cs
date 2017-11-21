@@ -2,6 +2,7 @@
 using LifeCycleBank.Interfaces;
 using System.Linq;
 using LifeCycleBank.Models;
+using System;
 
 namespace LifeCycleBank.Tests
 {
@@ -81,6 +82,31 @@ namespace LifeCycleBank.Tests
             else
             {
                 throw new AccountBalanceException("The specified amount was bigger than the available sum on the credit account. Could not continue.");
+            }
+        }
+        public string DeleteAccount(int accountId)
+        {
+            try
+            {
+                Accounts.Remove(Accounts.FirstOrDefault(x => x.Id == accountId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+
+        public string DeleteCustomer(int customerId)
+        {
+            try
+            {
+                Customers.Remove(Customers.FirstOrDefault(x => x.Id == customerId));
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
             }
         }
     }

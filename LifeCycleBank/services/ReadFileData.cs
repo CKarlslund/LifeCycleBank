@@ -3,6 +3,7 @@ using LifeCycleBank.Models;
 using LifeCycleBank.services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -61,8 +62,8 @@ namespace LifeCycleBank
                         {
                             Id = Convert.ToInt32(splitLine[0]),
                             Owner = customers.FirstOrDefault(x => x.Id == Convert.ToInt32(splitLine[1])),
-                            Balance = Convert.ToDecimal(splitLine[2].Replace(".", ","))
-                        };
+                            Balance = Convert.ToDecimal(splitLine[2], CultureInfo.InvariantCulture)
+                    };
                         totalBalance += account.Balance;
                         accounts.Add(account);
                     }
