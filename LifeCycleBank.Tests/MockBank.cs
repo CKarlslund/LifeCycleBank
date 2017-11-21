@@ -84,7 +84,56 @@ namespace LifeCycleBank.Tests
                 throw new AccountBalanceException("The specified amount was bigger than the available sum on the credit account. Could not continue.");
             }
         }
-        public string DeleteAccount(int accountId)
+
+        public string CreateCustomer(string organizationNumber, string companyName, string address, string postalCode, string city, string country, string region, string phoneNumber)
+        {
+            if (!string.IsNullOrEmpty(organizationNumber) &&
+                !string.IsNullOrEmpty(companyName) &&
+                !string.IsNullOrEmpty(address) &&
+                !string.IsNullOrEmpty(postalCode) &&
+                !string.IsNullOrEmpty(city))
+            {
+                try
+                {
+                    var customer = new Customer
+                    {
+                        Id = Customers.Max(x => x.Id) + 1,
+                        OrganizationNumber = organizationNumber,
+                        CompanyName = companyName,
+                        Address = address,
+                        PostalCode = postalCode,
+                        City = city,
+                        Country = country,
+                        Region = region,
+                        PhoneNumber = phoneNumber
+                    };
+                    Customers.Add(customer);
+                    Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customer, Balance = 0 });
+                    return "true";
+                }
+                catch (Exception)
+                {
+                    return "false";
+                }
+            }
+            else
+                return "false";
+        }
+
+        public string CreateAccount(ICustomer customerId, int balance)
+        {
+            try
+            {
+                Accounts.Add(new Account { Id = Accounts.Max(x => x.Id) + 1, Owner = customerId, Balance = balance });
+                return ("true");
+            }
+            catch (Exception)
+            {
+                return ("false");
+            }
+        }
+
+     public string DeleteAccount(int accountId)
         {
             try
             {
