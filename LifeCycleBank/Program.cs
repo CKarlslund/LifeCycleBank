@@ -221,48 +221,58 @@ namespace LifeCycleBank
 
                             Console.WriteLine();
                             Console.WriteLine("Ange kundnummer på kunden du vill skapa konto hos:");
-                            var customerID = Convert.ToInt32(Console.ReadLine());
-
-                            Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
-                            var balance = Console.ReadLine();
-
-                            decimal value;
-                            if (decimal.TryParse(balance, out value))
+                            var customerID = Console.ReadLine();
+                            int ID;
+                            if (int.TryParse(customerID, out ID))
                             {
-                                var customer = CustomerService.GetCustomer(bank, customerID);
+                                Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
+                                var balance = Console.ReadLine();
 
-                                if (customer != null)
+                                decimal value;
+                                if (decimal.TryParse(balance, out value))
                                 {
-                                    var result = bank.CreateAccount(customer, value);
+                                    var customer = CustomerService.GetCustomer(bank, ID);
 
-                                    if (result == "true")
+                                    if (customer != null)
                                     {
-                                        Console.Clear();
-                                        Console.WriteLine("*****************************");
-                                        Console.WriteLine("     Kontot är nu Skapat     ");
-                                        Console.WriteLine("*****************************");
+                                        var result = bank.CreateAccount(customer, value);
+
+                                        if (result == "true")
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("*****************************");
+                                            Console.WriteLine("     Kontot är nu Skapat     ");
+                                            Console.WriteLine("*****************************");
+                                        }
+                                        else
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("*****************************");
+                                            Console.WriteLine("     Något gick snett!!!     ");
+                                            Console.WriteLine("*****************************");
+                                        }
                                     }
                                     else
                                     {
                                         Console.Clear();
                                         Console.WriteLine("*****************************");
-                                        Console.WriteLine("     Något gick snett!!!     ");
+                                        Console.WriteLine("   Kundnummret finns inte    ");
                                         Console.WriteLine("*****************************");
                                     }
                                 }
                                 else
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("*****************************");
-                                    Console.WriteLine("   Kundnummret finns inte    ");
-                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("Du måste ange ett belopp.");
+                                    break;
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("Du måste ange ett belopp.");
+                                Console.WriteLine("Du måste ange ett nummer.");
                                 break;
                             }
+
+                            
                             break;
                         }
 
