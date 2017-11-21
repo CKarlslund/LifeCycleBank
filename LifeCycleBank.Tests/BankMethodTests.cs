@@ -1,4 +1,5 @@
 ﻿using LifeCycleBank.Interfaces;
+using LifeCycleBank.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,7 @@ namespace LifeCycleBank.Tests
 
         [Fact]
         public void Can_Create_Deposit()
-        {          
+        {
             var account = _bank.Accounts.FirstOrDefault(a => a.Id == 13003);
 
             _bank.CreateDeposit(account, 700.00M);
@@ -71,6 +72,23 @@ namespace LifeCycleBank.Tests
             var toAccount = _bank.Accounts.FirstOrDefault(a => a.Id == 13004);
 
             Assert.Throws<AccountBalanceException>(() => _bank.CreateTransaction(fromAccount, toAccount, 400));
+        }
+
+        [Fact]
+        public void Can_Create_Customer()
+        {
+            var customer = _bank.CreateCustomer("12345", "Nackademin", "Tomtebodavägen 10", "12345", "Stockholm", "Sweden", "region", "0723457689");
+
+            Assert.Equal("true", customer);
+        }
+
+        [Fact]
+        public void Can_Create_Account()
+        {
+            var customer = _bank.Customers.FirstOrDefault(a => a.Id == 1092);
+            var account = _bank.CreateAccount(customer, 1000);
+
+            Assert.Equal("true", account);
         }
     }
 }
