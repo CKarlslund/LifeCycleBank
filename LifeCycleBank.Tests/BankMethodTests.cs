@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace LifeCycleBank.Tests
@@ -27,6 +28,58 @@ namespace LifeCycleBank.Tests
             var result = _bank.Accounts.FirstOrDefault(a => a.Id == account.Id);
 
             Assert.Equal(1000.00M, result.Balance);
+        }
+
+        [Fact]
+        public void Withdrawal_Amount_Must_Be_Larger_Than_0()
+        {
+            var account = _bank.Accounts.FirstOrDefault(a => a.Id == 13003);
+
+            try
+            {
+                _bank.CreateWithdrawal(account, -700.00M);
+                _bank.CreateDeposit(account, 0M);
+                Assert.True(true);
+            }
+            catch
+            {
+                Assert.True(false);
+            }
+        }
+
+        [Fact]
+        public void Deposit_Amount_Must_Be_Larger_Than_0()
+        {
+            var account = _bank.Accounts.FirstOrDefault(a => a.Id == 13003);
+
+            try
+            {
+                _bank.CreateDeposit(account, -700.00M);
+                _bank.CreateDeposit(account, 0M);
+                Assert.True(true);
+            }
+            catch
+            {
+                Assert.True(false);
+            }
+        }
+
+        [Fact]
+        public void Transaction_Amount_Must_Be_Larger_Than_0()
+        {
+            var fromAccount = _bank.Accounts.FirstOrDefault(a => a.Id == 13003);
+            var toAccount = _bank.Accounts.FirstOrDefault(a => a.Id == 13004);
+
+            try
+            {
+                _bank.CreateTransaction(fromAccount, toAccount, -200);
+                _bank.CreateTransaction(fromAccount, toAccount, 0);
+                Assert.True(true);
+            }
+            catch
+            {
+                Assert.True(false);
+            }
         }
 
         [Fact]
