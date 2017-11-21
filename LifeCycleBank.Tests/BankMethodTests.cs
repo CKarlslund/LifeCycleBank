@@ -75,9 +75,17 @@ namespace LifeCycleBank.Tests
         }
 
         [Fact]
+
         public void Can_Create_Customer()
         {
             var customer = _bank.CreateCustomer("12345", "Nackademin", "Tomtebodavägen 10", "12345", "Stockholm", "Sweden", "region", "0723457689");
+             Assert.Equal("true", customer);
+        }
+        
+        [Fact]
+        public void Can_Delete_Customer()
+        {
+            var customer = _bank.DeleteCustomer(1092);
 
             Assert.Equal("true", customer);
         }
@@ -87,6 +95,14 @@ namespace LifeCycleBank.Tests
         {
             var customer = _bank.Customers.FirstOrDefault(a => a.Id == 1092);
             var account = _bank.CreateAccount(customer, 1000);
+          
+           Assert.Equal("true", account);
+        }
+      
+        [Fact]
+        public void Can_Delete_Account()
+        {
+            var account = _bank.DeleteAccount(13013);
 
             Assert.Equal("true", account);
         }
