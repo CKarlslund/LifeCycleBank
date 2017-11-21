@@ -36,12 +36,21 @@ namespace LifeCycleBank.Tests
         }
 
         [Fact]
-        public void SercCustomerTest()
+        public void SearchCustomerTest()
         {
             var bank = new MockBank();
-            var customers = CustomerService.SearchCustomer(bank, "luleå");
+            var customers = CustomerService.SearchCustomer(bank, "Luleå");
 
             Assert.Equal(2, customers.Count);
+        }
+
+        [Fact]
+        public void Can_Enter_Partial_SerchTest()
+        {
+            var bank = new MockBank();
+            var customers = CustomerService.SearchCustomer(bank, "Berg ");
+
+            Assert.Equal(1, customers.Count);
         }
     }
 }
