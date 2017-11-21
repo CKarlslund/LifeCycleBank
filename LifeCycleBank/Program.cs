@@ -15,6 +15,25 @@ namespace LifeCycleBank
             Console.Clear();
             ReadFileData.ReadFileFromBankData();
             var bank = new Bank();
+
+            try
+            {
+                
+                RunProgram(bank);
+            }
+            catch (Exception e)
+            {
+                
+                Console.WriteLine("Ett allvarligt fel uppstod. Tryck på ENTER för att fortsätta");
+                Console.WriteLine(e);
+                Console.ReadLine();
+                Console.Clear();
+                RunProgram(bank);
+            }
+        }
+
+        static void RunProgram(Bank bank)
+        {
             bool closeProgram = false;
 
             do
@@ -49,7 +68,8 @@ namespace LifeCycleBank
                                     SearchCustomers(bank, searchWord);
                                 }
 
-                            } else
+                            }
+                            else
                             {
                                 Console.WriteLine("Du måste ange ett sökord.");
                             }
@@ -74,7 +94,8 @@ namespace LifeCycleBank
                                     Console.WriteLine("Du måste ange ett nummer.");
                                     break;
                                 }
-                            } else
+                            }
+                            else
                             {
                                 Console.WriteLine("Du måste ange ett nummer.");
                             }
@@ -120,7 +141,7 @@ namespace LifeCycleBank
                             {
                                 Console.Clear();
                                 Console.WriteLine("*****************************");
-                                Console.WriteLine("     Kunden är nu Skapad     ");
+                                Console.WriteLine("     Kunden är nu skapad     ");
                                 Console.WriteLine("*****************************");
                             }
                             else
@@ -142,49 +163,57 @@ namespace LifeCycleBank
                             Console.WriteLine("*****************************");
 
                             Console.WriteLine("Ange kundnummer på kunden du vill ta bort:");
-                            var customerId = Convert.ToInt32(Console.ReadLine());
+                            var customerId = Console.ReadLine();
 
-                            var customerAccounts = CustomerService.GetCustomerAccounts(bank, customerId);
-                            var customerCheckExists = CustomerService.GetCustomer(bank, customerId);
-
-                            if (customerCheckExists != null)
+                            int value;
+                            if (int.TryParse(customerId, out value))
                             {
-                                if (bank.ValidateDeleteCustomer(customerId, customerAccounts) == true)
+                                var customerAccounts = CustomerService.GetCustomerAccounts(bank, value);
+                                var customerCheckExists = CustomerService.GetCustomer(bank, value);
+
+                                if (customerCheckExists != null)
                                 {
-                                    var result = bank.DeleteCustomer(customerId);
+                                    if (bank.ValidateDeleteCustomer(value, customerAccounts) == true)
+                                    {
 
-                                    if (result == "true")
+                                        var result = bank.DeleteCustomer(value);
+
+                                        if (result == "true")
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("*****************************");
+                                            Console.WriteLine("   Kunden är nu bortagen.    ");
+                                            Console.WriteLine("*****************************");
+                                        }
+
+                                        else if (result == "false")
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("*****************************");
+                                            Console.WriteLine("   Hoppsan något gick fel!   ");
+                                            Console.WriteLine("*****************************");
+                                        }
+                                    }
+                                    else
                                     {
                                         Console.Clear();
                                         Console.WriteLine("*****************************");
-                                        Console.WriteLine("   Kunden är nu bortagen.    ");
+                                        Console.WriteLine("Kontot har fortfarande pengar");                           
                                         Console.WriteLine("*****************************");
                                     }
-
-                                    else if (result == "false")
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("*****************************");
-                                        Console.WriteLine("   Hoppsan något gick fel!   ");
-                                        Console.WriteLine("*****************************");
-                                    }
-
                                 }
                                 else
                                 {
                                     Console.Clear();
                                     Console.WriteLine("*****************************");
-                                    Console.WriteLine("Kontot har fortfarande pengar");
+                                    Console.WriteLine("Kunden finns inte");
                                     Console.WriteLine("*****************************");
                                 }
                             }
-
                             else
                             {
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine(      "Kunden finns inte"      );
-                                Console.WriteLine("*****************************");
+                                Console.WriteLine("Du måste ange ett nummer.");
+                                break;
                             }
                             break;
                         }
@@ -200,43 +229,60 @@ namespace LifeCycleBank
 
                             Console.WriteLine();
                             Console.WriteLine("Ange kundnummer på kunden du vill skapa konto hos:");
-                            int customerID;
-                            int.TryParse(Console.ReadLine(), out customerID);
 
-                            Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
-
-                            int balance;
-                            int.TryParse(Console.ReadLine(), out balance);
-
-                            var customer = CustomerService.GetCustomer(bank, customerID);
-
-                            if (customer != null)
+                            var customerID = Console.ReadLine();
+                            int ID;
+                            if (int.TryParse(customerID, out ID))
                             {
-                                var result = bank.CreateAccount(customer, balance);
+                                Console.WriteLine("Ange hur mycket du vill sätta in på kontot:");
+                                var balance = Console.ReadLine();
 
-                                if (result == "true")
+                                decimal value;
+                                if (decimal.TryParse(balance, out value))
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("*****************************");
-                                    Console.WriteLine("     Kontot är nu Skapat     ");
-                                    Console.WriteLine("*****************************");
+                                    var customer = CustomerService.GetCustomer(bank, ID);
+
+                                    if (customer != null)
+                                    {
+                                        var result = bank.CreateAccount(customer, value);
+
+                                        if (result == "true")
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("*****************************");
+                                            Console.WriteLine("     Kontot är nu Skapat     ");
+                                            Console.WriteLine("*****************************");
+                                        }
+                                        else
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("*****************************");
+                                            Console.WriteLine("     Något gick snett!!!     ");
+                                            Console.WriteLine("*****************************");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("*****************************");
+                                        Console.WriteLine("   Kundnummret finns inte    ");
+                                        Console.WriteLine("*****************************");
+                                    }
+
                                 }
                                 else
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("*****************************");
-                                    Console.WriteLine("     Något gick snett!!!     ");
-                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("Du måste ange ett belopp.");
+                                    break;
                                 }
                             }
                             else
                             {
-                                Console.Clear();
-                                Console.WriteLine("*****************************");
-                                Console.WriteLine("   Kundnummret finns inte    ");
-                                Console.WriteLine("*****************************");
+                                Console.WriteLine("Du måste ange ett nummer.");
+                                break;
                             }
 
+                            
                             break;
                         }
 
@@ -249,38 +295,38 @@ namespace LifeCycleBank
 
                             Console.Write("Ange kontonummer på det konto du vill ta bort:");
 
-                            int accountId;
-                            var isInt = int.TryParse(Console.ReadLine(), out accountId);
+                            var accountId = Console.ReadLine();
 
-                            if (bank.ValidateDeleteCustomer(accountId, bank) == false)
+
+                            int value;
+
+                            if (int.TryParse(accountId, out value))
                             {
-                                if (isInt)
+
+                                if (bank.ValidateDeleteCustomer(value, bank) == false)
                                 {
-                                    if (bank.ValidateDeleteCustomer(accountId, bank) == false)
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("*****************************");
-                                        Console.WriteLine("Kontot har fortfarande pengar");
-                                        Console.WriteLine("*****************************");
-                                    }
-                                    else
-                                    {
-                                        bank.DeleteAccount(accountId);
-                                        Console.Clear();
-                                        Console.WriteLine("*****************************");
-                                        Console.WriteLine("    Kontot är nu bortaget    ");
-                                        Console.WriteLine("*****************************");
-                                    }
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("Kontot har fortfarande pengar");
+                                    Console.WriteLine("*****************************");
                                 }
+
                                 else
                                 {
-                                    Console.WriteLine("Du måste ange ett nummer.");
-                                    break;
+                                    bank.DeleteAccount(value);
+                                    Console.Clear();
+                                    Console.WriteLine("*****************************");
+                                    Console.WriteLine("    Kontot är nu bortaget    ");
+                                    Console.WriteLine("*****************************");
                                 }
+
                             }
                             else
                             {
+
                                 Console.WriteLine("Du måste ange ett nummer.");
+                                break;
+
                             }
                             break;
                         }
@@ -293,7 +339,7 @@ namespace LifeCycleBank
                             decimal amuontToTransfer;
                             try
                             {
-                                debitAccount = DebitAccount();
+                                debitAccount = GetDebitAccount();
                                 if (debitAccount == null)
                                 {
                                     Console.WriteLine();
@@ -319,7 +365,7 @@ namespace LifeCycleBank
                             decimal amuontToTransfer;
                             try
                             {
-                                creditAccount = CreditAccount();
+                                creditAccount = GetCreditAccount();
                                 if (creditAccount == null)
                                 {
                                     Console.WriteLine();
@@ -333,7 +379,7 @@ namespace LifeCycleBank
                                 Console.WriteLine("Du måste ange nummer.");
                                 break;
                             }
-                            Withdrawal(bank,creditAccount,amuontToTransfer);
+                            Withdrawal(bank, creditAccount, amuontToTransfer);
                             break;
                         }
 
@@ -346,15 +392,16 @@ namespace LifeCycleBank
                             decimal amuontToTransfer;
                             try
                             {
-                                creditAccount = CreditAccount();
-                                debitAccount = DebitAccount();
+                                creditAccount = GetCreditAccount();
+                                debitAccount = GetDebitAccount();
                                 if (debitAccount == null)
                                 {
                                     Console.WriteLine();
                                     Console.WriteLine("Det angivna kontot finns inte.");
                                     break;
 
-                                } else if (debitAccount == null)
+                                }
+                                else if (debitAccount == null)
                                 {
                                     Console.WriteLine();
                                     Console.WriteLine("Det angivna mottagar kontot finns inte.");
@@ -378,8 +425,6 @@ namespace LifeCycleBank
                 Console.Clear();
 
             } while (closeProgram == false);
-
-
         }
 
         private static void DisplayBankData()
@@ -413,7 +458,7 @@ namespace LifeCycleBank
                 Console.WriteLine("7) Insättning");
                 Console.WriteLine("8) Uttag");
                 Console.WriteLine("9) Överföring");
-                Console.Write("Skriv in nummret på dit val: ");
+                Console.Write("Skriv in nummret på ditt val: ");
                 int userChoice = -1;
                 try
                 {
@@ -520,57 +565,48 @@ namespace LifeCycleBank
             }
         }
 
-
-
         public static void Deposit(Bank bank,IAccount toAccount, decimal amount)
         {
-            bank.CreateDeposit(toAccount, amount);
-            Console.WriteLine("Den angivna summan är nu insatt på kontot.");
+            try
+            {
+                bank.CreateDeposit(toAccount, amount);
+                Console.WriteLine("Den angivna summan är nu insatt på kontot.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            
         }
 
         public static void Withdrawal(Bank bank, IAccount fromAccount, decimal amount)
         {
-            bool fail = false;
-
             try
             {
                 bank.CreateWithdrawal(fromAccount, amount);
-            }
-            catch 
-            {
-                fail = true;
-                Console.WriteLine("Medges ej.");
-            }
-
-            if (fail == false)
-            {
                 Console.WriteLine("Du har nu tagit ut " + amount + " från konto " + fromAccount.Id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
 
         public static void Transaction(Bank bank, IAccount fromAccount, IAccount toAccount, decimal amuontToTransfer)
         {
-            bool fail = false;
-
             try
             {
                 bank.CreateTransaction(fromAccount, toAccount, amuontToTransfer);
-            }
-            catch 
-            {
-                fail = true;
-                Console.WriteLine("Den angivna summan är större än vad som finns tillgängligt på kontot. Kunde inte fortsätta.");
-            }
-
-            if (fail == false)
-            {
                 Console.WriteLine(amuontToTransfer + " överfört från konto " + fromAccount.Id + " till " + toAccount.Id);
             }
-
-
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
-        public static IAccount CreditAccount()
+        public static IAccount GetCreditAccount()
         {
             Console.WriteLine("Från konto:");
             var formAccount = Convert.ToInt32(Console.ReadLine());
@@ -579,7 +615,7 @@ namespace LifeCycleBank
             return creditAccount;
         }
 
-        public static IAccount DebitAccount()
+        public static IAccount GetDebitAccount()
         {
             Console.WriteLine("Till konto:");
             var toAccount = Convert.ToInt32(Console.ReadLine());

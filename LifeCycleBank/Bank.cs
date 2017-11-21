@@ -38,22 +38,36 @@ namespace LifeCycleBank
 
         public void CreateDeposit(IAccount toAccount, decimal amount)
         {
-            var account = Accounts.FirstOrDefault(a => a.Id == toAccount.Id);
+            if (amount > 0)
+            {
+                var account = Accounts.FirstOrDefault(a => a.Id == toAccount.Id);
 
-            account.Balance += amount;
+                account.Balance += amount;
+            }
+            else
+            {
+                throw new TransactionValueException("Det angivna värdet är inte giltigt för en insättning.");
+            }
         }
 
         public void CreateWithdrawal(IAccount fromAccount, decimal amount)
         {
             var account = Accounts.FirstOrDefault(a => a.Id == fromAccount.Id);
 
-            if (amount <= account.Balance)
+            if (amount > 0)
             {
-                account.Balance = account.Balance - amount;
+                if (amount <= account.Balance)
+                {
+                    account.Balance = account.Balance - amount;
+                }
+                else
+                {
+                    throw new AccountBalanceException("Täckning saknas");
+                }
             }
             else
             {
-                throw new AccountBalanceException("The targeted account does not have enough money!");
+                throw new TransactionValueException("Det angivna värdet är inte giltigt för uttag.");
             }
         }
 
@@ -62,16 +76,24 @@ namespace LifeCycleBank
             var creditAccount = Accounts.FirstOrDefault(a => a.Id == fromAccount.Id);
             var debitAccount = Accounts.FirstOrDefault(a => a.Id == toAccount.Id);
 
-
-            if (amount <= creditAccount.Balance)
+            if (amount > 0)
             {
-                creditAccount.Balance = creditAccount.Balance - amount;
-                debitAccount.Balance += amount;
+                if (amount <= creditAccount.Balance)
+                {
+                    creditAccount.Balance = creditAccount.Balance - amount;
+                    debitAccount.Balance += amount;
+                }
+                else
+                {
+                    throw new AccountBalanceException("Det angivna värdet är större än täckningen på kontot. Transaktionen avbruten.");
+                }
             }
             else
             {
-                throw new AccountBalanceException("The specified amount was bigger than the available sum on the credit account. Could not continue.");
+                throw new TransactionValueException("Det angivna värdet är inte giltigt för en transaktion.");
             }
+
+            
         }
 
 
