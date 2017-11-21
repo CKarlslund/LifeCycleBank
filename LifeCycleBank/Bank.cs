@@ -96,6 +96,7 @@ namespace LifeCycleBank
             
         }
 
+
         public string CreateCustomer(string organizationNumber, string companyName, string address, string postalCode, string city, string country, string region, string phoneNumber)
         {
             if (!string.IsNullOrEmpty(organizationNumber) &&
