@@ -67,7 +67,7 @@ namespace LifeCycleBank
             }
             else
             {
-                throw new TransactionValueException("Det angivna värdet är inte giltigt för en insättning.");
+                throw new TransactionValueException("Det angivna värdet är inte giltigt för uttag.");
             }
         }
 
@@ -90,7 +90,7 @@ namespace LifeCycleBank
             }
             else
             {
-                throw new TransactionValueException("Det angivna värdet är inte giltigt för en insättning.");
+                throw new TransactionValueException("Det angivna värdet är inte giltigt för en transaktion.");
             }
 
             
