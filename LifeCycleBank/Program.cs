@@ -316,7 +316,11 @@ namespace LifeCycleBank
                                 }
 
                             }
-
+                            else
+                            {
+                                Console.WriteLine("Du måste ange ett nummer.");
+                                break;
+                            }
 
                             break;
                         }
